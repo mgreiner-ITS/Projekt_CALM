@@ -1,5 +1,5 @@
 *.cache
 *.lref
-*/Debug/*
+**/Debug/*
 *.suo
 FileManagerCALM/obj/Debug/*
