@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-  public  enum FileTypeEnum
-    { 
-       pdf, txt
+    public enum FileType
+    {
+        pdf, txt, other
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-   public enum StatusEnum
+    public enum Status
     {
         synchronize,
-        unsynchronize, 
+        unsynchronize,
         error
     }
 }

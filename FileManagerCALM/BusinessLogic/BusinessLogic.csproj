@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileTypeEnum.cs" />
+    <Compile Include="FileFinder.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="FileType.cs" />
+    <Compile Include="Partitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusEnum.cs" />
+    <Compile Include="Status.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
