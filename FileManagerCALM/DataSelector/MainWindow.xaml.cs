@@ -22,10 +22,18 @@ namespace DataSelector
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataSeletorViewModel _dataSeletorViewModel;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new DataSeletorViewModel();
+            DataContext = _dataSeletorViewModel;
+
+            _dataSeletorViewModel = new DataSeletorViewModel();
+            
+            //_dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
+           
         }
+
+        //private void SelectionList_SelectionChanged(object sender, SelectionChangedEventArgs e) 
     }
 }
