@@ -13,7 +13,7 @@ namespace BusinessLogic
         public string Text { get; set; }
         public string Pfad { get; set; }
 
-        Status Status;
+        Status _status;
 
         public FileType getTyp()
         {

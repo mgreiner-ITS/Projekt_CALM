@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataSelector"
+        xmlns:ViewModel="clr-namespace:DataSelector.ViewModel" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -35,26 +36,35 @@
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <!--#endregion-->
-        <TextBlock Grid.Row="5" Grid.RowSpan="1" Padding="80,5,0,0" FontSize="14" FontWeight="Bold" >Partition Selection</TextBlock>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="6"  Grid.RowSpan="9">
-            <ListView Name="ListPartitions" ItemsSource="{Binding ???}" SelectedItem="{Binding ???}"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
-               
-            </ListView>
+
+        <TextBlock Grid.Row="7" Grid.RowSpan="1" Padding="90,5,0,0" Background="Bisque" >Partition Selection</TextBlock>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="8"  Grid.RowSpan="7">
+            <ListBox Name="ListPartitions" ItemsSource="{Binding Partitions}" SelectedItem="{Binding SelectedPartition}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Bisque">
+             
+            </ListBox>
         </ScrollViewer>
 
+        <TextBlock Grid.Row="4" Grid.RowSpan="1" Padding="110,5,3,3" Background="Aquamarine" >Options</TextBlock>
+        <TextBlock Grid.Row="5" Margin="30,0,0,0" Background="Aquamarine" >Show Invalid Files</TextBlock>
+        <!--<CheckBox Name="CheckBoxOption1" IsChecked="True" Checked="???" Grid.Row="5"></CheckBox>-->
+        <TextBlock Grid.Row="6" Margin="30,0,0,0" Background="Aquamarine" ></TextBlock>
+        <!--<CheckBox Name="CheckBoxOption2" IsChecked="True" Checked="???" Grid.Row="6"></CheckBox>-->
 
         
         <ProgressBar Minimum="0" Maximum="100" Width="250" Height="20" Background="LightGreen"></ProgressBar>
-        <Button Name="ButtonSyncDatabase" Click="{Binding ???}" Grid.Row="1" Grid.RowSpan="2" Width="200" Height="40">Sync Database</Button>
-        <Button Name="ButtonCancelSync" Click="{Binding ???}" Grid.Row="3" Width="150" Height="20">Cancel</Button>
+        <!--<Button Name="ButtonSyncDatabase" Click="{Binding ???}" Grid.Row="1" Grid.RowSpan="2" Width="200" Height="40">Sync Database</Button>
+        <Button Name="ButtonCancelSync" Click="{Binding ???}" Grid.Row="3" Width="150" Height="20">Cancel</Button>-->
 
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Padding="225,5,0,0" FontSize="14" FontWeight="Bold" >File Selection</TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="5">
-            <ListView  Name="ListFiles" ItemsSource="{Binding ???}" SelectedItem="{Binding ???}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-            </ListView>
+            <ListBox x:Name="ListFiles"  ItemsSource="{Binding FolderandFileOC}" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Beige">
+                <ListBoxItem Content="test"></ListBoxItem>
+
+
+            </ListBox>
         </ScrollViewer>
 
         
