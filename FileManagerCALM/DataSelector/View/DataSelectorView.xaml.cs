@@ -26,14 +26,14 @@ namespace DataSelector
         public MainWindow()
         {
             InitializeComponent();
+            
+            _dataSeletorViewModel = new DataSeletorViewModel();
             DataContext = _dataSeletorViewModel;
 
-            _dataSeletorViewModel = new DataSeletorViewModel();
-            
-            //_dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
-           
+            _dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
+
         }
 
-        //private void SelectionList_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+        
     }
 }

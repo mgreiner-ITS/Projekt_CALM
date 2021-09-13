@@ -60,7 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\DataSeletorViewModel.cs" />
     <Compile Include="ViewModel\PartitionViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\DataSelectorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -68,8 +68,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\DataSelectorView.xaml.cs">
+      <DependentUpon>DataSelectorView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -106,8 +106,6 @@
       <Name>BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

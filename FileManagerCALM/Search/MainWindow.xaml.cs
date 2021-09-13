@@ -22,8 +22,7 @@ namespace Search
     {
         public MainWindow()
         {
-            //InitializeComponent();
-            
+           //InitializeComponent();
         }
     }
 }

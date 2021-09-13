@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DataSelector.ViewModel 
+
+namespace DataSelector.ViewModel
 {
     public class DataSeletorViewModel : INotifyPropertyChanged
     {
@@ -22,6 +23,8 @@ namespace DataSelector.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<string> Partitions { get; set; } = new ObservableCollection<string>();
+      
+
         public ObservableCollection<string> FolderandFileOC { get; set; } = new ObservableCollection<string>();
 
 
@@ -41,10 +44,13 @@ namespace DataSelector.ViewModel
             foreach (var item in _fileFinder.FindPartitions())
             {
                 PartitionViewModel partitionViewModel = new PartitionViewModel(item);
-                
+
                 Partitions.Add(partitionViewModel.Path);
 
             }
+
+
+
         }
 
         public string SelectedPartition
@@ -54,24 +60,23 @@ namespace DataSelector.ViewModel
             {
                 _selectedPartition = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedPartition"));
-
-
-               ShowSelectedPath(_selectedPartition);
-
+                ShowSelectedPath(_selectedPartition);
             }
         }
 
-        private void ShowSelectedPath(string selectedPartition)
+        private void ShowSelectedPath(string selectedPartition) ///alle Verzeichnis wurden angezeigt
         {
+            var item = _fileFinder.FindFiles(_selectedPartition);
+           
             List<CheckBox> list = new List<CheckBox>();
             list.Clear();
-            CheckBox cb = new CheckBox(); 
-            TextBlock tb = new TextBlock();
-            var item = _fileFinder.FindFiles(_selectedPartition);
-                  
+            
+
             foreach (var file in item.directories)
-            {
-               
+            {CheckBox cb = new CheckBox();
+            TextBlock tb = new TextBlock();
+         
+
                 tb.Text = Path.GetFileName(file);
                 cb.Content = tb;
                 list.Add(cb);
@@ -81,19 +86,26 @@ namespace DataSelector.ViewModel
             {
                 if (file == ".txt" || file == ".pdf")
                 {
-                   
+                    CheckBox cb = new CheckBox();
+                    TextBlock tb = new TextBlock();
+
                     tb.Text = file;
                     cb.Content = tb;
-                 }
+                    list.Add(cb);
+                }
                 else
                 {
+                    CheckBox cb = new CheckBox();
+                    TextBlock tb = new TextBlock();
                     tb.Text = file;
                     tb.Foreground = System.Windows.Media.Brushes.Gray;
-                    cb.Content = tb;
+                    cb.Content = tb;  
+                    list.Add(cb);
                 }
-                list.Add(cb);
+             
             }
 
+            selectionList.ItemsSource = list;
         }
     }
 }
