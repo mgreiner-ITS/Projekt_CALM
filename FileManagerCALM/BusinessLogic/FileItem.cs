@@ -10,7 +10,7 @@ namespace BusinessLogic
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public FileType Type { get; set; }
         public string Content { get; set; }
         public string Path { get; set; }
         public string Partition { get; set; }
@@ -21,15 +21,7 @@ namespace BusinessLogic
         public FileType getTyp()
         {
 
-            switch (this.Type)
-            {
-                case "pdf": return FileType.pdf;
-                case "txt": return FileType.txt;
-
-                default:
-                    return FileType.other;
-                    break;
-            }
+            return Type;
 
 
         }

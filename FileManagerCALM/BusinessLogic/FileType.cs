@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLogic
+﻿namespace BusinessLogic
 {
     public enum FileType
     {
-        pdf, txt, other
+        other = 0,
+        pdf = 1,
+        txt = 2,
+        docx = 3,
+        xlsx = 4
     }
 }

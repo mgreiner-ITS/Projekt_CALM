@@ -31,8 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mk.DBConnector">
-      <HintPath>..\..\..\..\..\Downloads\Mk.DbConnector\Mk.DBConnector.dll</HintPath>
+    <Reference Include="Mk.DBConnector, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Mk.DBConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Mk.Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Mk.Log.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

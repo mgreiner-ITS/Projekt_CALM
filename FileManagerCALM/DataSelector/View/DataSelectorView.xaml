@@ -55,7 +55,7 @@
         </Grid.ColumnDefinitions>
         <!--#endregion-->
 
-        <TextBlock Grid.Row="7" Grid.RowSpan="1" Padding="90,5,0,0" Background="Bisque" >Partition Selection</TextBlock>
+        <TextBlock Grid.Row="7" Grid.RowSpan="1" Padding="90,5,0,0">Partition Selection</TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="8"  Grid.RowSpan="7">
 
             <ListBox ItemsSource="{Binding Partitions}" SelectedItem ="{Binding SelectedPartition}" DisplayMemberPath="Name"
@@ -64,10 +64,10 @@
        
         </ScrollViewer>
 
-        <TextBlock Grid.Row="4" Grid.RowSpan="1" Padding="110,5,3,3" Background="Aquamarine" >Options</TextBlock>
-        <TextBlock Grid.Row="5" Margin="30,0,0,0" Background="Aquamarine" >Show Invalid Files</TextBlock>
+        <TextBlock Grid.Row="4" Grid.RowSpan="1" Padding="110,5,3,3">Options</TextBlock>
+        <TextBlock Grid.Row="5" Margin="30,0,0,0" >Show Invalid Files</TextBlock>
         <!--<CheckBox Name="CheckBoxOption1" IsChecked="True" Checked="???" Grid.Row="5"></CheckBox>-->
-        <TextBlock Grid.Row="6" Margin="30,0,0,0" Background="Aquamarine" ></TextBlock>
+        <TextBlock Grid.Row="6" Margin="30,0,0,0"></TextBlock>
         <!--<CheckBox Name="CheckBoxOption2" IsChecked="True" Checked="???" Grid.Row="6"></CheckBox>-->
 
         

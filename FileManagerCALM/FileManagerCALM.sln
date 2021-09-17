@@ -5,9 +5,23 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{7307DB14-2AD5-494E-B808-498A8F0B02A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search", "Search\Search.csproj", "{68A6C0D9-1987-4408-8D3B-FB67F44B4B6B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSelector", "DataSelector\DataSelector.csproj", "{A366E454-300C-4039-A1C4-F3A7515350C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{68F027EE-9C6B-4EF5-8271-30C1F8E39501}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{111B0906-730A-41E2-8F88-E00D3DD7A5E8}"
+	ProjectSection(SolutionItems) = preProject
+		lib\CommandHelper.dll = lib\CommandHelper.dll
+		lib\itextsharp.dll = lib\itextsharp.dll
+		lib\Mk.DBConnector.dll = lib\Mk.DBConnector.dll
+		lib\Mk.Log.dll = lib\Mk.Log.dll
+		lib\Mono.Security.dll = lib\Mono.Security.dll
+		lib\MySql.Data.dll = lib\MySql.Data.dll
+		lib\Npgsql.dll = lib\Npgsql.dll
+		lib\Visualis.Extractor.dll = lib\Visualis.Extractor.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +33,10 @@ Global
 		{7307DB14-2AD5-494E-B808-498A8F0B02A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7307DB14-2AD5-494E-B808-498A8F0B02A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7307DB14-2AD5-494E-B808-498A8F0B02A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68A6C0D9-1987-4408-8D3B-FB67F44B4B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68A6C0D9-1987-4408-8D3B-FB67F44B4B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68A6C0D9-1987-4408-8D3B-FB67F44B4B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68A6C0D9-1987-4408-8D3B-FB67F44B4B6B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A366E454-300C-4039-A1C4-F3A7515350C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A366E454-300C-4039-A1C4-F3A7515350C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A366E454-300C-4039-A1C4-F3A7515350C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
