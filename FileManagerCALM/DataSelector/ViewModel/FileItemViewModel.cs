@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataSelector.ViewModel
 {
-    class FileItemViewModel : ViewModelBase
+    class FileItemViewModel : ItemViewModel
     {
         private long _id;
 
@@ -17,18 +17,6 @@ namespace DataSelector.ViewModel
             set
             {
                 _id = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
                 OnPropertyChanged();
             }
         }
@@ -57,18 +45,6 @@ namespace DataSelector.ViewModel
             }
         }
 
-        private string _path;
-
-        public string Path
-        {
-            get { return _path; }
-            set
-            {
-                _path = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _partition;
 
         public string Partition
@@ -92,16 +68,6 @@ namespace DataSelector.ViewModel
                 OnPropertyChanged();
             }
         }
-        private bool _status;
-
-        public bool Status
-        {
-            get { return _status; }
-            set
-            {
-                _status = value;
-                OnPropertyChanged();
-            }
-        }
+        
     }
 }
