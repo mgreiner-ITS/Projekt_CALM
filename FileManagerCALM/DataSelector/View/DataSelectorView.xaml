@@ -1,12 +1,30 @@
-﻿<Window x:Class="DataSelector.MainWindow"
+﻿<Window x:Class="DataSelector.DataSelectorView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataSelector"
         xmlns:ViewModel="clr-namespace:DataSelector.ViewModel" 
+        xmlns:Model="clr-namespace:BusinessLogic;assembly=BusinessLogic" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.DataContext>
+        <ViewModel:DataSeletorViewModel></ViewModel:DataSeletorViewModel>
+    </Window.DataContext>
+    <!--<Window.Resources>
+        <Style TargetType="TreeViewItem">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Path}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>-->
 
     <Grid>
         <!--#region GridDefinitions-->
@@ -40,7 +58,7 @@
         <TextBlock Grid.Row="7" Grid.RowSpan="1" Padding="90,5,0,0" Background="Bisque" >Partition Selection</TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="8"  Grid.RowSpan="7">
 
-            <ListBox  ItemsSource="{Binding Partitions}" SelectedItem ="{Binding SelectedPartition}"
+            <ListBox ItemsSource="{Binding Partitions}" SelectedItem ="{Binding SelectedPartition}" DisplayMemberPath="Name"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Bisque">
                </ListBox>
        
@@ -59,19 +77,43 @@
 
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Padding="225,5,0,0" FontSize="14" FontWeight="Bold" >File Selection</TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="5">
-            <ListBox  x:Name="SelectionList"  
+            <!--<ListBox  x:Name="SelectionList"  
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Beige">
-                
-
-
             <ListBox x:Name="ListFiles"  ItemsSource="{Binding FolderandFileOC}" 
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Beige">
-                <ListBoxItem Content="test"></ListBoxItem>
-
-
                 </ListBox>
+            </ListBox>-->
+            <!--<TreeView Name="viewsTreeView" ItemsSource="{Binding DataSeletorViewModel}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type local:DataSelectorView}" ItemsSource="{Binding SelectionOverview}">
+                        <TextBlock Text="{Binding }" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>-->
 
-            </ListBox>
+
+
+            <TreeView  Height="600" Width="600" FontSize="12" FontFamily="Segoe UI" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Partitions}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate>
+                        <TreeViewItem Header="{Binding Name}" ItemsSource="{Binding Items}">
+                            <TreeViewItem.ItemTemplate>
+                                <HierarchicalDataTemplate>
+                                    <TreeViewItem ItemsSource="{Binding SubDirectories}" Header="{Binding Name}">
+                                        <TreeViewItem.ItemTemplate>
+                                            <DataTemplate>
+                                                <TreeViewItem Header="{Binding Name}"/>
+                                            </DataTemplate>
+                                        </TreeViewItem.ItemTemplate>
+                                    </TreeViewItem>
+                                </HierarchicalDataTemplate>   
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+
+
         </ScrollViewer>
 
         

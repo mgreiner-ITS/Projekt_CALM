@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-    public class File
+    public class FileItem
     {
+        public long Id { get; set; }
         public string Name { get; set; }
-        public string Typ { get; set; }
-        public string Text { get; set; }
-        public string Pfad { get; set; }
+        public string Type { get; set; }
+        public string Content { get; set; }
+        public string Path { get; set; }
+        public string Partition { get; set; }
+        public DateTime LastModified { get; set; }
 
         Status _status;
 
         public FileType getTyp()
         {
 
-            switch (this.Typ)
+            switch (this.Type)
             {
                 case "pdf": return FileType.pdf;
                 case "txt": return FileType.txt;

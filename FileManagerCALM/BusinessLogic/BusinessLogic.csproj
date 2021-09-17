@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryItem.cs" />
     <Compile Include="FileFinder.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="FileItem.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="Partitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

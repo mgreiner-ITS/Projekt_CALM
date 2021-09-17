@@ -20,17 +20,17 @@ namespace DataSelector
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DataSelectorView : Window
     {
         DataSeletorViewModel _dataSeletorViewModel;
-        public MainWindow()
+        public DataSelectorView()
         {
             InitializeComponent();
-            
-            _dataSeletorViewModel = new DataSeletorViewModel();
-            DataContext = _dataSeletorViewModel;
 
-            _dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
+            //_dataSeletorViewModel = new DataSeletorViewModel();
+            //DataContext = _dataSeletorViewModel;
+
+            //_dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
 
         }
 
