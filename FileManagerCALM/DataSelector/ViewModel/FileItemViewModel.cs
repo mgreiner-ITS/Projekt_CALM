@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataSelector.ViewModel
 {
-    class FileItemViewModel : ItemViewModel
+    public class FileItemViewModel : ItemViewModel
     {
         private long _id;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataSelector.ViewModel
 {
-    class ItemViewModel : ViewModelBase
+    public class ItemViewModel : ViewModelBase
     {
 
         private string _name;
