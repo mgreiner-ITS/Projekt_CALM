@@ -59,7 +59,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\DirectoryItemViewModel.cs" />
     <Compile Include="ViewModel\DataSeletorViewModel.cs" />
+    <Compile Include="ViewModel\FileItemViewModel.cs" />
+    <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\PartitionViewModel.cs" />
     <Page Include="View\DataSelectorView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -69,6 +72,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\DataSelectorView.xaml.cs">
       <DependentUpon>DataSelectorView.xaml</DependentUpon>
       <SubType>Code</SubType>
