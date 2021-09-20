@@ -77,42 +77,17 @@
 
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Padding="225,5,0,0" FontSize="14" FontWeight="Bold" >File Selection</TextBlock>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="5">
-            <!--<ListBox  x:Name="SelectionList"  
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Beige">
-            <ListBox x:Name="ListFiles"  ItemsSource="{Binding FolderandFileOC}" 
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Beige">
-                </ListBox>
-            </ListBox>-->
-            <!--<TreeView Name="viewsTreeView" ItemsSource="{Binding DataSeletorViewModel}">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type local:DataSelectorView}" ItemsSource="{Binding SelectionOverview}">
-                        <TextBlock Text="{Binding }" />
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>-->
-         
+            <ListView ItemsSource="{Binding SelectedPartition.Items}"
+                      SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-
-            <TreeView  Height="382" Width="600" FontSize="12" FontFamily="Segoe UI" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Partitions}">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate>
-                        <TreeViewItem Header="{Binding Name}" ItemsSource="{Binding Items}">
-                            <TreeViewItem.ItemTemplate>
-                                <HierarchicalDataTemplate>
-                                    <TreeViewItem ItemsSource="{Binding SubDirectories}" Header="{Binding Name}">
-                                        <TreeViewItem.ItemTemplate>
-                                            <DataTemplate>
-                                                <TreeViewItem Header="{Binding Name}"/>
-                                            </DataTemplate>
-                                        </TreeViewItem.ItemTemplate>
-                                    </TreeViewItem>
-                                </HierarchicalDataTemplate>   
-                            </TreeViewItem.ItemTemplate>
-                        </TreeViewItem>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
-
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="\Icons\folder.png"/>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
             </ListView>
         </ScrollViewer>
