@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace BusinessLogic
+namespace Models
 {
     public class FileFinder
     {

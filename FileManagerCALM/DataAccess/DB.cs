@@ -1,13 +1,13 @@
-﻿using BusinessLogic;
-using DataAccess.Events;
+﻿using DataAccess.Events;
 using Mk.DBConnector;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
 namespace DataAccess
 {
-    public class DB : IODB
+    public class DB
     {
         public event InfosMessageEventHandler infoMessage;
         public event ErrorMessageEH ErrorMessage;
@@ -129,10 +129,10 @@ namespace DataAccess
         /// </summary>
         /// <param name="currentItem"></param>
 
-        public void UpdateItems(FileItem currentItem)
+        public void UpdateItems(FileItem currentItem, string oldPath)
         {
             // UPDATE `filesql` SET `Path` = 'C:Users?winklerDownload\\Enum.pdf', `Content` = 'HHHHH', `LastModified` = '2021-09-19', `DataType` = 'pfd', `DataName` = 'Enum' WHERE `filesql`.`ID` = 11;
-            sql = string.Format($"UPDATE  `filesql` SET `Path` = '{currentItem.Path}',`Content` = '{currentItem.Content}', `LastModified` = '{currentItem.LastModified}', `DataType` = '{currentItem.Type}', `DataName` = '{currentItem.Name}' WHERE `filesql`.`ID` = {currentItem.Id}; ;");
+            sql = string.Format($"UPDATE  `filesql` SET `Path` = '{currentItem.Path}',`Content` = '{currentItem.Content}', `LastModified` = '{currentItem.LastModified}', `DataType` = '{currentItem.Type}', `DataName` = '{currentItem.Name}' WHERE `filesql`.`Path` = {oldPath} ;");
             dbmysql.Adapter.ExecuteSQL(sql);
 
             try

@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace DataAccess
 {
     public interface IODB
     {
-        bool Connection();
-        void InsertData(FileItem neuItem);
-        List<FileItem> GetFileItems(string sucheText);
-        void DelItems(FileItem fileItem);
-        void UpdateItems(FileItem currentItem);
+        //bool Connection();
+        //void InsertData(FileItem neuItem);
+        //List<FileItem> GetFileItems(string sucheText);
+        //void DelItems(FileItem fileItem);
+        //void UpdateItems(FileItem currentItem, string oldPath);
     }
 }

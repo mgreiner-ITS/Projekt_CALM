@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace BusinessLogic
+namespace Models
 {
     public class Partitions
     {

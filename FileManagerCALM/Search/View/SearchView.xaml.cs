@@ -18,12 +18,12 @@ namespace Search
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SearchView : Window
     {
-        public MainWindow()
+        public SearchView()
         {
-            //InitializeComponent();
-            SearchViewModel _searchViewModel = new SearchViewModel() ;
+            InitializeComponent();
+         
         }
     }
 }

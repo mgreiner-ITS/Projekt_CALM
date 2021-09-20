@@ -11,13 +11,13 @@ namespace Search.ViewModel
         public ICommand SearchDataCommand { get; set; }
         public SearchViewModel()
         {
-            SearchModel _searchItem = new SearchModel();
+            BusinessLogic.Management.SearchManagement _searchItem = new BusinessLogic.Management.SearchManagement();
             SearchDataCommand = new RelayCommand(c => SearchData());
         }
         
         private void SearchData()
         {
-
+            string a = Text;
         }
 
         private void OnPropertyChanged(String property)
@@ -28,18 +28,18 @@ namespace Search.ViewModel
             }
         }
 
-        private string _Text;
+        private string _text;
         public string Text
         {
             get
             {
-                return this._Text;
+                return this._text;
             }
             set
             {
-                if (value != this._Text)
+                if (value != this._text)
                 {
-                    this._Text = value;
+                    this._text = value;
                     OnPropertyChanged("Text");
                 }
                 //OnPropertyChanged("Test");

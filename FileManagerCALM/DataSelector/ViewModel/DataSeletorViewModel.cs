@@ -1,6 +1,5 @@
 ﻿using BusinessLogic;
 using CommandHelper;
-using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +37,7 @@ namespace DataSelector.ViewModel
         {
             _fileFinder = new FileFinder();
 
-            DB dB = new DB();
+           // DB dB = new DB();
             //FileItem FakeItem = new FileItem();
             //FakeItem.Name = "test.txt";
             //FakeItem.Partition = "C";
@@ -46,7 +45,7 @@ namespace DataSelector.ViewModel
             //FakeItem.Type = FileType.other;
             //FakeItem.Content = "flfgkgl";
            // dB.InsertData(FakeItem);
-            dB.GetFileItems("Test");
+            //dB.GetFileItems("Test");
 
             GetAllPartions();
 
