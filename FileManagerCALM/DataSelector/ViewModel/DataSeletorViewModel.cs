@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using BusinessLogic.Management;
 using CommandHelper;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,11 +10,14 @@ using System.IO;
 using System.Management;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using Models;
+using Prism.Mvvm;
+using System.Windows.Data;
+using DataSelector.View;
 
 namespace DataSelector.ViewModel
 {
-    public class DataSeletorViewModel : INotifyPropertyChanged
+    public class DataSeletorViewModel : BindableBase , INotifyPropertyChanged
     {
         private FileFinder _fileFinder;
         private PartitionViewModel _selectedPartition;
@@ -35,6 +39,7 @@ namespace DataSelector.ViewModel
 
         public DataSeletorViewModel()
         {
+            ShowSearchWindowCmd = new DelegateCommand(ShowMethod);
             _fileFinder = new FileFinder();
 
             GetAllPartions();
@@ -43,6 +48,13 @@ namespace DataSelector.ViewModel
                                                        );
         }
 
+        private void ShowMethod()
+        {
+            SearchView objSearchView = new SearchView();
+            objSearchView.Show();
+        }
+
+        public ICommand ShowSearchWindowCmd { get; private set; }
         private void GetAllPartions()
         {
             Partitions.Clear();

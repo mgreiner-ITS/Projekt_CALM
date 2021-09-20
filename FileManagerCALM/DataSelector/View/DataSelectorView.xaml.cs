@@ -27,6 +27,8 @@ namespace DataSelector
         {
             InitializeComponent();
 
+            var vm = new DataSeletorViewModel();
+            DataContext = vm;
             //_dataSeletorViewModel = new DataSeletorViewModel();
             //DataContext = _dataSeletorViewModel;
 

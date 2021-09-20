@@ -7,7 +7,7 @@ using System.Data;
 
 namespace DataAccess
 {
-    public class DB
+    public class DB : IODB
     {
         public event InfosMessageEventHandler infoMessage;
         public event ErrorMessageEH ErrorMessage;
@@ -73,7 +73,7 @@ namespace DataAccess
         /// Dateien im DB holen
         /// </summary>
         /// <param name="searchText"></param>
-        public List<FileItem> GetFileItems(string searchText)
+        public List<FileItem> GetFileItemsByText(string searchText)
         {
             sql = string.Format($"SELECT * FROM filesql Where Content Like '%{searchText}%' ;");
             DataTable dt = dbmysql.Adapter.GetDataTable(sql);
