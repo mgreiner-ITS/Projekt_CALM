@@ -1,13 +1,9 @@
 ﻿using BusinessLogic;
-using CommandHelper;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Management;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -36,15 +32,15 @@ namespace DataSelector.ViewModel
         public DataSeletorViewModel()
         {
             _fileFinder = new FileFinder();
-
-           // DB dB = new DB();
+            MonitorUsbInputs();
+            // DB dB = new DB();
             //FileItem FakeItem = new FileItem();
             //FakeItem.Name = "test.txt";
             //FakeItem.Partition = "C";
             //FakeItem.Path =  @"C:\\Users\\winkler\\Downloads\\test.txt";
             //FakeItem.Type = FileType.other;
             //FakeItem.Content = "flfgkgl";
-           // dB.InsertData(FakeItem);
+            // dB.InsertData(FakeItem);
             //dB.GetFileItems("Test");
 
             GetAllPartions();
@@ -55,16 +51,16 @@ namespace DataSelector.ViewModel
 
         private void GetAllPartions()
         {
-          //  var partitions = _fileFinder.FindPartitions();
+            //  var partitions = _fileFinder.FindPartitions();
             Partitions.Clear();
             foreach (var item in _fileFinder.FindPartitions())
             {
                 PartitionViewModel partitionViewModel = new PartitionViewModel(item);
-               
 
-               Partitions.Add(partitionViewModel);
+                //_fileFinder.MonitorFileSystem(partitionViewModel.Name);
+                Partitions.Add(partitionViewModel);
 
-           }
+            }
         }
 
 
@@ -88,7 +84,8 @@ namespace DataSelector.ViewModel
 
 
             foreach (var file in item.directories)
-            { CheckBox cb = new CheckBox();
+            {
+                CheckBox cb = new CheckBox();
                 TextBlock tb = new TextBlock();
 
 
@@ -121,7 +118,27 @@ namespace DataSelector.ViewModel
         }
 
         //     selectionList.ItemsSource = list;
-    }
 
+        public void MonitorUsbInputs()
+        {
+            ManagementEventWatcher insertWatcher = new ManagementEventWatcher();
+            ManagementEventWatcher removeWatcher = new ManagementEventWatcher();
+            WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
+            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 3");
+
+            insertWatcher.EventArrived += new EventArrivedEventHandler(Watcher_UsbInserted);
+            insertWatcher.Query = insertQuery;
+            insertWatcher.Start();
+
+            removeWatcher.EventArrived += new EventArrivedEventHandler(Watcher_UsbRemoved);
+            removeWatcher.Query = removeQuery;
+            removeWatcher.Start();
+        }
+
+        private void Watcher_UsbInserted(object sender, EventArrivedEventArgs e) => WatcherLogic();
+        private void Watcher_UsbRemoved(object sender, EventArrivedEventArgs e) => WatcherLogic();
+        private void WatcherLogic() => GetAllPartions();
+        
     }
+}
 

@@ -57,5 +57,11 @@
   <ItemGroup>
     <Content Include="SQL\filesql.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models\Models.csproj">
+      <Project>{C707F02B-196D-4B27-A8C5-71701F73CC6A}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
