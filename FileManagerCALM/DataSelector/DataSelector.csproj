@@ -67,6 +67,7 @@
     <Compile Include="ViewModel\DataSeletorViewModel.cs" />
     <Compile Include="ViewModel\FileItemViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
+    <Compile Include="ViewModel\ItemViewModelConverter.cs" />
     <Compile Include="ViewModel\PartitionViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="View\SearchView.xaml.cs">

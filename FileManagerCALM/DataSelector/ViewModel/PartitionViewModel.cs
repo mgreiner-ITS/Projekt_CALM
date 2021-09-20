@@ -35,13 +35,13 @@ namespace DataSelector.ViewModel
 
             foreach (var directoryName in items.directories)
             {
-                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel { Name = directoryName.Name };
+                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel { Name = directoryName };
                 Items.Add(directoryViewModel);
             }
 
             foreach (var fileName in items.files)
             {
-                FileItemViewModel fileItemViewModel = new FileItemViewModel { Name = fileName.Name };
+                FileItemViewModel fileItemViewModel = new FileItemViewModel { Name = fileName };
                 Items.Add(fileItemViewModel);
             }
 

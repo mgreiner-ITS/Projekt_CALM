@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Management\FileFinder.cs" />
+    <Compile Include="FileFinder.cs" />
     <Compile Include="Management\SearchManagement.cs" />
+    <Compile Include="Management\UploadManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
