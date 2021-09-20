@@ -1,4 +1,5 @@
 ﻿using BusinessLogic;
+using BusinessLogic.Management;
 using CommandHelper;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace DataSelector.ViewModel
     {
         private FileFinder _fileFinder;
         private PartitionViewModel _selectedPartition;
+        private DirectoryItemViewModel _selectedDirectory;
         public ListBox selectionList;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,16 +39,6 @@ namespace DataSelector.ViewModel
         {
             _fileFinder = new FileFinder();
 
-           // DB dB = new DB();
-            //FileItem FakeItem = new FileItem();
-            //FakeItem.Name = "test.txt";
-            //FakeItem.Partition = "C";
-            //FakeItem.Path =  @"C:\\Users\\winkler\\Downloads\\test.txt";
-            //FakeItem.Type = FileType.other;
-            //FakeItem.Content = "flfgkgl";
-           // dB.InsertData(FakeItem);
-            //dB.GetFileItems("Test");
-
             GetAllPartions();
 
             SelectionOverview.Add(new TreeViewItem() { Header = "Test" }
@@ -55,16 +47,15 @@ namespace DataSelector.ViewModel
 
         private void GetAllPartions()
         {
-          //  var partitions = _fileFinder.FindPartitions();
             Partitions.Clear();
             foreach (var item in _fileFinder.FindPartitions())
             {
                 PartitionViewModel partitionViewModel = new PartitionViewModel(item);
-               
 
-               Partitions.Add(partitionViewModel);
 
-           }
+                Partitions.Add(partitionViewModel);
+
+            }
         }
 
 
@@ -75,53 +66,20 @@ namespace DataSelector.ViewModel
             {
                 _selectedPartition = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedPartition"));
-                ShowSelectedPath(_selectedPartition.Name);
             }
         }
 
-        private void ShowSelectedPath(string selectedPartition) ///alle Verzeichnis wurden angezeigt
+        public DirectoryItemViewModel SelectedDirectory
         {
-            var item = _fileFinder.FindFiles(_selectedPartition.Name);
-
-            List<CheckBox> list = new List<CheckBox>();
-            list.Clear();
-
-
-            foreach (var file in item.directories)
-            { CheckBox cb = new CheckBox();
-                TextBlock tb = new TextBlock();
-
-
-                tb.Text = Path.GetFileName(file);
-                cb.Content = tb;
-                list.Add(cb);
+            get { return _selectedDirectory; }
+            set
+            {
+                _selectedDirectory = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedDirectory"));
             }
-
-            //foreach (var file in item.files)
-            //{
-            //    if (file == ".txt" || file == ".pdf")
-            //    {
-            //        CheckBox cb = new CheckBox();
-            //        TextBlock tb = new TextBlock();
-
-            //        tb.Text = file;
-            //        cb.Content = tb;
-            //        list.Add(cb);
-            //    }
-            //    else
-            //    {
-            //        CheckBox cb = new CheckBox();
-            //        TextBlock tb = new TextBlock();
-            //        tb.Text = file;
-            //        tb.Foreground = System.Windows.Media.Brushes.Gray;
-            //        cb.Content = tb;  
-            //        list.Add(cb);
-            //    }
-
         }
 
-        //     selectionList.ItemsSource = list;
     }
 
-    }
+}
 

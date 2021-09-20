@@ -110,9 +110,16 @@
       <Project>{7307db14-2ad5-494e-b808-498a8f0b02a7}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Models\Models.csproj">
+      <Project>{c707f02b-196d-4b27-a8c5-71701f73cc6a}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
