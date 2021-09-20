@@ -39,8 +39,14 @@ namespace DataSelector.ViewModel
             _fileFinder = new FileFinder();
 
             DB dB = new DB();
-
-
+            //FileItem FakeItem = new FileItem();
+            //FakeItem.Name = "test.txt";
+            //FakeItem.Partition = "C";
+            //FakeItem.Path =  @"C:\\Users\\winkler\\Downloads\\test.txt";
+            //FakeItem.Type = FileType.other;
+            //FakeItem.Content = "flfgkgl";
+           // dB.InsertData(FakeItem);
+            dB.GetFileItems("Test");
 
             GetAllPartions();
 
