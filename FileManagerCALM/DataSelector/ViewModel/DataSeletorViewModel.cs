@@ -158,7 +158,7 @@ namespace DataSelector.ViewModel
             set
             {
                 _selectedDirectory = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedDirectory"));
+                OnPropertyChanged();
             }
         }
 
