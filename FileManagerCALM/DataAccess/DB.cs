@@ -72,10 +72,10 @@ namespace DataAccess
         /// <summary>
         /// Dateien im DB holen
         /// </summary>
-        /// <param name="sucheText"></param>
-        public List<FileItem> GetFileItems(string sucheText)
+        /// <param name="searchText"></param>
+        public List<FileItem> GetFileItems(string searchText)
         {
-            sql = string.Format($"SELECT * FROM filesql Where Content Like '%{sucheText}%' ;");
+            sql = string.Format($"SELECT * FROM filesql Where Content Like '%{searchText}%' ;");
             DataTable dt = dbmysql.Adapter.GetDataTable(sql);
 
             List<FileItem> listItems = new List<FileItem>();

@@ -1,5 +1,6 @@
 ﻿using DataAccess;
-
+using Models;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Management
 {
@@ -13,10 +14,10 @@ namespace BusinessLogic.Management
 
         }
 
-        public void SearchText(string sucheText)
+        public List<FileItem> SearchText(string searchText)
         {
 
-            dbAcessSql.GetFileItems(sucheText);
+            return dbAcessSql.GetFileItemsByText(searchText);
 
         }
     }
