@@ -57,5 +57,14 @@ namespace DataSelector.ViewModel
             }
         }
 
+        private string _iconPath;
+
+        public string IconPath
+        {
+            get { return _iconPath; }
+            set { _iconPath = value; }
+        }
+
+
     }
 }

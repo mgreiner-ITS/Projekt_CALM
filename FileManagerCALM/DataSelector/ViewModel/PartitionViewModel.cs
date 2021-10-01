@@ -13,6 +13,8 @@ namespace DataSelector.ViewModel
 {
     public class PartitionViewModel
     {
+        private const string PartitionIcon = "pack://application:,,,/Resources/drive.png";
+
         private readonly FileFinder _fileFinder;
 
         public string Name { get; set; }
@@ -22,7 +24,7 @@ namespace DataSelector.ViewModel
         public PartitionViewModel(DriveInfo driveInfo)
         {
             _fileFinder = new FileFinder();
-            Name = driveInfo.Name;
+            Name = driveInfo.Name.Split(':').FirstOrDefault() != null ? driveInfo.Name.Split(':').FirstOrDefault() :string.Empty;
             DriveType = driveInfo.DriveType;
             IsReady = driveInfo.IsReady;
             InitializeItems();
@@ -35,13 +37,17 @@ namespace DataSelector.ViewModel
 
             foreach (var directoryName in items.directories)
             {
-                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel { Name = directoryName };
+                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel
+                {
+                    Name = Path.GetFileName(directoryName),
+                    Path = directoryName
+                };
                 Items.Add(directoryViewModel);
             }
 
             foreach (var fileName in items.files)
             {
-                FileItemViewModel fileItemViewModel = new FileItemViewModel { Name = fileName };
+                FileItemViewModel fileItemViewModel = new FileItemViewModel(new FileInfo(fileName));
                 Items.Add(fileItemViewModel);
             }
 

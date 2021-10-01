@@ -7,6 +7,8 @@ namespace DataSelector.ViewModel
 {
     public class FileItemViewModel : ItemViewModel
     {
+        private const string FileIcon = "pack://application:,,,/Resources/file.png";
+
         private long _id;
 
         public long Id
@@ -69,13 +71,14 @@ namespace DataSelector.ViewModel
 
         public FileItemViewModel()
         {
-
+            IconPath = FileIcon;
         }
 
         public FileItemViewModel(FileInfo fileInfo)
         {
             Path = fileInfo.FullName;
             Name = fileInfo.Name;
+            IconPath = FileIcon;
         }
 
     }

@@ -7,19 +7,23 @@ namespace DataSelector.ViewModel
 {
     public class DirectoryItemViewModel : ItemViewModel
     {
+        private const string FolderIcon = "pack://application:,,,/Resources/folder_blue.png";
         private readonly FileFinder _findFinder;
+
         public ObservableCollection<ItemViewModel> SubItemViewModels { get; set; } = new ObservableCollection<ItemViewModel>();
 
         public DirectoryItemViewModel()
         {
             _findFinder = new FileFinder();
+            IconPath = FolderIcon;
         }
 
         public DirectoryItemViewModel(DirectoryInfo directoryInfo)
         {
             _findFinder = new FileFinder();
-            Name = directoryInfo.Name;
+            Name = System.IO.Path.GetFileName(directoryInfo.Name);
             Path = directoryInfo.FullName;
+            IconPath = FolderIcon;
             InitializeSubItems();
         }
 

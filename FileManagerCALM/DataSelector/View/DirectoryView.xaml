@@ -26,7 +26,7 @@
 
                         <StackPanel Grid.Column="2" 
                                 Orientation="Horizontal">
-                            <Image Width="20" Source="pack://application:,,,/Resources/folder.png"/>
+                            <Image Width="20" Source="{Binding IconPath, Mode=OneWay}"/>
                             <TextBlock Margin="5,0,0,0" 
                                            Text="{Binding Name}" 
                                            HorizontalAlignment="Left" 

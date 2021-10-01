@@ -148,9 +148,15 @@
   <ItemGroup>
     <Resource Include="View\search.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\file.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\drive.png" />
+    <Resource Include="Resources\folder_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -83,6 +83,9 @@ namespace DataSelector.ViewModel
             SelectedItemViewModels.Add(fivm);
             //michael test ende :)
 
+            // Test
+            ProgressBarProgress = 75;
+
         }
 
 
