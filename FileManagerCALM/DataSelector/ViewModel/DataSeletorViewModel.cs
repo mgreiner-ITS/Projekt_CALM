@@ -13,7 +13,6 @@ using System.Management;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Models;
 using Prism.Mvvm;
 using System.Windows.Data;
 using DataSelector.View;

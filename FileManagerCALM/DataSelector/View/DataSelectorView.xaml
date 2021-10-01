@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataSelector"
-        xmlns:ViewModel="clr-namespace:DataSelector.ViewModel" 
+        xmlns:ViewModel="clr-namespace:DataSelector.ViewModel"
+        xmlns:View="clr-namespace:DataSelector.View"
         xmlns:Model="clr-namespace:BusinessLogic;assembly=BusinessLogic" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -76,20 +77,27 @@
 
 
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Padding="225,5,0,0" FontSize="14" FontWeight="Bold" >File Selection</TextBlock>
+        
+        
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="5">
-            <ListView ItemsSource="{Binding SelectedPartition.Items}"
+            <!--<ListView ItemsSource="{Binding SelectedPartition.Items}"
                       SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Width="20" Source="\Icons\folder.png"/>
+                            <Image Width="20" Source="pack://application:,,,/Resources/folder.png"/>
                             <TextBlock Margin="5,0,0,0" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-            </ListView>
+            </ListView>-->
+
+            <ContentControl>
+                <View:DirectoryView/>
+            </ContentControl>
+            
         </ScrollViewer>
 
 

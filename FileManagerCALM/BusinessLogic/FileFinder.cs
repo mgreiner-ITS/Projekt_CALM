@@ -18,10 +18,10 @@ namespace BusinessLogic
             return (allDirectories, allFiles);
         }
 
-        public (List<string> directories, List<string> files) FindFiles(string drivePath)
+        public (List<string> directories, List<string> files) FindFiles(DirectoryInfo directoryInfo)
         {
-            var allDirectories = Directory.GetDirectories(drivePath).ToList();
-            var allFiles = Directory.GetFiles(drivePath).ToList();
+            var allDirectories = Directory.GetDirectories(directoryInfo.FullName).ToList();
+            var allFiles = Directory.GetFiles(directoryInfo.FullName).ToList();
             return (allDirectories, allFiles);
         }
 

@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using Models;
 using System;
+using System.IO;
 
 namespace DataSelector.ViewModel
 {
@@ -64,6 +65,17 @@ namespace DataSelector.ViewModel
                 _lastModified = value;
                 OnPropertyChanged();
             }
+        }
+
+        public FileItemViewModel()
+        {
+
+        }
+
+        public FileItemViewModel(FileInfo fileInfo)
+        {
+            Path = fileInfo.FullName;
+            Name = fileInfo.Name;
         }
 
     }

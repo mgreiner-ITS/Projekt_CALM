@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataSelector.ViewModel
 {
-    class ItemViewModelConverter
+    public class ItemViewModelConverter
     {
-        public FileItem convert(FileItemViewModel fileItemViewModel)
+        public FileItem Convert(FileItemViewModel fileItemViewModel)
         {
             FileItem fileItem = new FileItem()
             {
@@ -23,6 +23,21 @@ namespace DataSelector.ViewModel
             };
 
             return fileItem;
+        }
+
+        public FileItemViewModel ConvertToFileItemViewModel(FileItem fileItem)
+        {
+            FileItemViewModel fileItemViewModel = new FileItemViewModel
+            {
+                Name = fileItem.Name,
+                Content = fileItem.Content,
+                Path = fileItem.Path,
+                Partition = fileItem.Partition,
+                Type = fileItem.Type,
+                LastModified = fileItem.LastModified
+            };
+
+            return fileItemViewModel;
         }
     }
 }
