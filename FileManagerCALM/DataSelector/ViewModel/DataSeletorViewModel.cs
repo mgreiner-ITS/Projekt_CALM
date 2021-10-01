@@ -91,7 +91,9 @@ namespace DataSelector.ViewModel
         private void Sync()
         {
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
+            FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
+            string asd = FileType.pdf.ToString();
 
             double numberOfItems = itemViewModels.Count();
             double numberOfProcessedItems = 0;
@@ -106,7 +108,9 @@ namespace DataSelector.ViewModel
                     if (currentItemViewModel.GetType() == typeof(FileItemViewModel))
                     {
                         ItemViewModelConverter converter = new ItemViewModelConverter();
-                        _uploadManagement.InsertItem(converter.convert((FileItemViewModel)currentItemViewModel));
+                        _uploadManagement.InsertItem(fileReader.ReadFile(currentItemViewModel.Name));
+                        //TODO die nächste zeile (& somit den converter) braucht man nicht mehr? weil der "convert" automatisch beim read passiert?
+                        //_uploadManagement.InsertItem(converter.convert((FileItemViewModel)currentItemViewModel));
                     }
 
                     numberOfProcessedItems++;
