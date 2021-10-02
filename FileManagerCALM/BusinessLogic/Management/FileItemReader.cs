@@ -60,19 +60,19 @@ namespace BusinessLogic.Management
 
             FileType fileType;
             //TODO das zu einem schönen switch machen, schadewa java 7.3 oder so erlaubt das nicht :(
-            if (typeString.Equals(FileType.pdf))
+            if (typeString == FileType.pdf.ToString())
             {
                 fileType = FileType.pdf;
             }
-            else if (typeString.Equals(FileType.txt))
+            else if (typeString == FileType.txt.ToString())
             {
                 fileType = FileType.txt;
             }
-            else if (typeString.Equals(FileType.docx))
+            else if (typeString == FileType.docx.ToString())
             {
                 fileType = FileType.docx;
             }
-            else if (typeString.Equals(FileType.xlsx))
+            else if (typeString == FileType.xlsx.ToString())
             {
                 fileType = FileType.xlsx;
             }

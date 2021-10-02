@@ -31,11 +31,7 @@ namespace DataSelector.ViewModel
 
         public ObservableCollection<ItemViewModel> SelectedItemViewModels { get; set; } = new ObservableCollection<ItemViewModel>();
 
-
-
-
         public ICommand WindowLoadedCommand { get; set; }
-
         public RelayCommand SyncCommand { get; set; }
         public RelayCommand CancelSyncCommand { get; set; }
 
@@ -90,7 +86,6 @@ namespace DataSelector.ViewModel
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
             FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
-            string asd = FileType.pdf.ToString();
 
             double numberOfItems = itemViewModels.Count();
             double numberOfProcessedItems = 0;
@@ -130,30 +125,10 @@ namespace DataSelector.ViewModel
                 objSearchView.Closed += (sender, args) => objSearchView = null;
                 objSearchView.Show();
             }
-         
-        
-          
         }
-       // ICommand _showSearchWindowCmd;
-      // 
-        public ICommand ShowSearchWindowCmd
-        { get;set;
-            //get
-            //{
-            //    if (!flag)
-            //    {
-            //        flag = true;
-            //        return _showSearchWindowCmd;
-            //    }
-            //    return null;
 
+        public ICommand ShowSearchWindowCmd { get; set; }
 
-
-            //}
-            //private set { _showSearchWindowCmd = value;
-            //    OnPropertyChanged();
-            //}
-        }
         private void GetAllPartions()
         {
             Partitions.Clear();
