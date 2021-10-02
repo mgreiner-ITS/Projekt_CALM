@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="FileFinder.cs" />
     <Compile Include="Management\FileItemReader.cs" />
+    <Compile Include="Management\FileOpener.cs" />
     <Compile Include="Management\SearchManagement.cs" />
     <Compile Include="Management\UploadManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,26 +1,62 @@
 ﻿using CommandHelper;
-
+using Models;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using BusinessLogic.Management;
 
 namespace DataSelector.ViewModel
 {
-   public class SearchViewModel : INotifyPropertyChanged
+    public class SearchViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        FileOpener _fileOpener;
+
         BusinessLogic.Management.SearchManagement _searchItem;
+        List<FileItem> listItems;
+        public ObservableCollection<FileItem> fileItems { get; set; } = new ObservableCollection<FileItem>();
         public ICommand SearchDataCommand { get; set; }
+        public ICommand DoubleClickCommand { get; set; }
+        //public ICollectionView CollectionView { get; set; }
+        FileItem _selectedItem;
+
         public SearchViewModel()
         {
             _searchItem = new BusinessLogic.Management.SearchManagement();
+
+          
             SearchDataCommand = new RelayCommand(c => SearchData());
+            DoubleClickCommand = new RelayCommand(c => ShowFile());
+
+        }
+        public FileItem SelectedItem // methode
+        {
+            get { return _selectedItem; }
+
+            set
+            {
+                _selectedItem = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedItem")); // Selected muss Property Changed
+            }
         }
 
+        private void ShowFile()
+        {
+            _fileOpener = new BusinessLogic.Management.FileOpener(SelectedItem);
+
+        }
+
+     
         private void SearchData()
         {
-            _searchItem.SearchText(_text);
-
+            fileItems.Clear();
+            listItems = _searchItem.SearchText(_text);
+            foreach (var item in listItems)
+            {
+                fileItems.Add(item);
+            }
         }
 
         private void OnPropertyChanged(String property)
@@ -49,9 +85,15 @@ namespace DataSelector.ViewModel
             }
         }
 
-     
+        private void GetFileItemByText(List<FileItem> list)
+        {
+            foreach (var item in list)
+            {
+                fileItems.Add(item);
+            }
+        }
 
 
 
-}
+    }
 }

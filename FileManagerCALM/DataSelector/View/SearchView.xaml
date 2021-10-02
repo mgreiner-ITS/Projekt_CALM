@@ -12,30 +12,46 @@
     </Window.DataContext>-->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <!-- Search Button-->
-        <Button Grid.Row="0" Name="btn_search"  Command="{Binding SearchDataCommand}"  Margin="705,0,9.6,180.4">
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                <Image Source="search.png" Stretch="Uniform" Height="25" Width="30" />
-            </StackPanel>
-        </Button>
-        <TextBox Grid.Row="0" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="txtBox_search" Margin="10,0,94.6,180.4" Foreground="Gray" FontSize="17" FontStyle="Italic">
 
-        </TextBox>
-        <ListBox Grid.Row="1" ItemsSource="{Binding fileItems}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                      
-                        <Label Content="{Binding Path}"></Label>
-                        <Label Content="{Binding Name}"></Label>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox Width="750"  
+                     Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Name="txtBox_search"  
+                     Foreground="Gray" 
+                     FontSize="17" 
+                     FontStyle="Italic">
+            </TextBox>
+            <Button  Name="btn_search"  Command="{Binding SearchDataCommand}"  Width="Auto" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="search.png" Stretch="Uniform" Height="25" Width="30" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding fileItems}" SelectedItem="{Binding SelectedItem}"  CanUserAddRows="False"  AutoGenerateColumns="False">
+            <!--<Border >
+                <Border.InputBindings>
+                    <MouseBinding MouseAction ="click" Command="{Binding cmd}"">
                         
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                    </MouseBinding>
+                </Border.InputBindings>
+            </Border>-->
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding DoubleClickCommand}"  />
+
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Path" Binding="{Binding Path = Path}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path = Name}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Path = Content}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Partition" Binding="{Binding Path = Partition}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="LastModified" Binding="{Binding Path = LastModified}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

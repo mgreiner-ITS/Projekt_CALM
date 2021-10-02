@@ -7,7 +7,7 @@ namespace BusinessLogic.Management
     public class SearchManagement
     {
         DB dbAcessSql;
-
+        List<FileItem> listItem;
         public SearchManagement()
         {
             dbAcessSql = new DB();
@@ -16,8 +16,8 @@ namespace BusinessLogic.Management
 
         public List<FileItem> SearchText(string searchText)
         {
-
-            return dbAcessSql.GetFileItemsByText(searchText);
+            listItem = dbAcessSql.GetFileItemsByText(searchText);
+            return listItem;
 
         }
     }

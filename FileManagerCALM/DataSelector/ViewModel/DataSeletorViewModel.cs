@@ -1,21 +1,16 @@
 ﻿using BusinessLogic;
 using BusinessLogic.Management;
 using CommandHelper;
-using Prism.Commands;
+using DataSelector.View;
 using Models;
-using System;
+using Prism.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Management;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Prism.Mvvm;
-using System.Windows.Data;
-using DataSelector.View;
 
 namespace DataSelector.ViewModel
 {
@@ -62,29 +57,29 @@ namespace DataSelector.ViewModel
                                                        );
 
             //michael test :)
-            FileItemViewModel fivm = new FileItemViewModel
-            {
-                Name = "asd",
-                Path = "c:/asd",
-                LastModified = new DateTime(),
-                Partition = "C",
-                Type = FileType.txt
-            };
+            //FileItemViewModel fivm = new FileItemViewModel
+            //{
+            //    Name = "asd",
+            //    Path = "c:/asd",
+            //    LastModified = new DateTime(),
+            //    Partition = "C",
+            //    Type = FileType.txt
+            //};
 
-            DirectoryItemViewModel divm = new DirectoryItemViewModel
-            {
-                Name = "folder",
-                Path = "c:/folder"
-            };
+            //DirectoryItemViewModel divm = new DirectoryItemViewModel
+            //{
+            //    Name = "folder",
+            //    Path = "c:/folder"
+            //};
 
 
-            SelectedItemViewModels.Add(fivm);
-            SelectedItemViewModels.Add(divm);
-            SelectedItemViewModels.Add(fivm);
-            //michael test ende :)
+            //SelectedItemViewModels.Add(fivm);
+            //SelectedItemViewModels.Add(divm);
+            //SelectedItemViewModels.Add(fivm);
+            ////michael test ende :)
 
-            // Test
-            ProgressBarProgress = 75;
+            //// Test
+            //ProgressBarProgress = 75;
 
         }
 
@@ -126,14 +121,39 @@ namespace DataSelector.ViewModel
         {
             cancelledSync = true;
         }
-
+        SearchView objSearchView = null;
         private void ShowMethod()
         {
-            SearchView objSearchView = new SearchView();
-            objSearchView.Show();
+            if (objSearchView == null )
+            {
+                objSearchView = new SearchView();
+                objSearchView.Closed += (sender, args) => objSearchView = null;
+                objSearchView.Show();
+            }
+         
+        
+          
         }
+       // ICommand _showSearchWindowCmd;
+      // 
+        public ICommand ShowSearchWindowCmd
+        { get;set;
+            //get
+            //{
+            //    if (!flag)
+            //    {
+            //        flag = true;
+            //        return _showSearchWindowCmd;
+            //    }
+            //    return null;
 
-        public ICommand ShowSearchWindowCmd { get; private set; }
+
+
+            //}
+            //private set { _showSearchWindowCmd = value;
+            //    OnPropertyChanged();
+            //}
+        }
         private void GetAllPartions()
         {
             Partitions.Clear();

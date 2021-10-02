@@ -57,6 +57,9 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <!--#endregion-->
+<Button Grid.Row="6" Content="Search_Window Open" Command="{Binding ShowSearchWindowCmd}"></Button>
+        <TextBlock Grid.Row="7" Grid.RowSpan="1" Padding="90,5,0,0">Partition Selection</TextBlock>
+        <!--<ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="8"  Grid.RowSpan="7">-->
 
 
             <!--GroupBox of the partition list-->
