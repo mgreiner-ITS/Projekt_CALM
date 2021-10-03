@@ -12,32 +12,30 @@ namespace DataAccess
         public event InfosMessageEventHandler infoMessage;
         public event ErrorMessageEH ErrorMessage;
         bool connection = false;
-
         DBAdapter dbmysql;
+        ConnectionState connectionState;
 
         string sql;
         public DB()
         {
             Connection();
+
         }
+
 
         public bool Connection()
         {
             dbmysql = new DBAdapter(DatabaseType.MySql,
              Instance.NewInstance, "localhost", 3306, "datastore", "root", "", "mysql.log");
             dbmysql.Adapter.LogFile = true; // LogFile = protokoll
-
-            try
+            connectionState = dbmysql.Adapter.CheckConnectionState();
+            if (connectionState == ConnectionState.Open)
             {
                 connection = true;
-
             }
-            catch (Exception ex)
-            {
-
-                ErrorMessage(ex.Message);
-            }
+            else infoMessage?.Invoke($"Keine Verbindung zur DB");
             return connection;
+
 
 
         }
@@ -52,8 +50,11 @@ namespace DataAccess
             // VALUES(NULL, 'C:\\Users\\winkler\\OneDrive - frrfrfrf44\\Desktop\\Deutschkurs', 'Test 123', 'C', '2021-09-14', 'txt', 'Text');
             sql = string.Format($"INSERT INTO `filesql` (`ID`, `Path`, `Content`, `Partitions`, `LastModified`, `DataType`, `DataName`) VALUES (NULL, '{newItem.Path}', '{newItem.Content}', '{newItem.Partition}', '{newItem.LastModified}', '{newItem.Type}', '{newItem.Name}'); ");
             DataTable t1 = dbmysql.Adapter.GetDataTable(sql);
+
+
             try
             {
+
                 dbmysql.Adapter.ExecuteSQL(sql);
                 infoMessage?.Invoke($"Successfully Insert");
 
@@ -75,27 +76,30 @@ namespace DataAccess
         /// <param name="searchText"></param>
         public List<FileItem> GetFileItemsByText(string searchText)
         {
-            sql = string.Format($"SELECT * FROM filesql Where Content Like '%{searchText}%' ;");
-            DataTable dt = dbmysql.Adapter.GetDataTable(sql);
-
             List<FileItem> listItems = new List<FileItem>();
-            foreach (DataRow r in dt.Rows)
+            if (searchText != null)
             {
-                FileItem item = new FileItem();
-                item.Id = Convert.ToInt64(r[0]);
-                item.Path = r[1].ToString();
-                item.Content = r[2].ToString();
-                item.Partition = r[3].ToString();
-                item.LastModified = Convert.ToDateTime(r[4]);
-                item.Type = (FileType)Enum.Parse(typeof(FileType), r[5].ToString());
-                item.Name = r[6].ToString();
+
+                sql = string.Format($"SELECT * FROM filesql Where Content Like '%{searchText}%' ;");
+                DataTable dt = dbmysql.Adapter.GetDataTable(sql);
+                foreach (DataRow r in dt.Rows)
+                {
+                    FileItem item = new FileItem();
+                    item.Id = Convert.ToInt64(r[0]);
+                    item.Path = r[1].ToString();
+                    item.Content = r[2].ToString();
+                    item.Partition = r[3].ToString();
+                    item.LastModified = Convert.ToDateTime(r[4]);
+                    item.Type = (FileType)Enum.Parse(typeof(FileType), r[5].ToString());
+                    item.Name = r[6].ToString();
 
 
-                listItems.Add(item);
+                    listItems.Add(item);
+                }
+                infoMessage?.Invoke($" erfolgreich Insert");
             }
-            infoMessage?.Invoke($" erfolgreich Insert");
-
             return listItems;
+
         }
 
         /// <summary>

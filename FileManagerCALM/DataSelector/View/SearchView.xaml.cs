@@ -20,11 +20,31 @@ namespace DataSelector.View
     /// </summary>
     public partial class SearchView : Window
     {
+       // bool isOpen = false;
+
         public SearchView()
         {
             InitializeComponent();
             var vm = new SearchViewModel();
             DataContext = vm;
+
+
         }
+
+        //public new void Show()
+        //{
+        //    //if (!isOpen)
+        //    //{
+        //       base.Show();
+        //    //}
+        //   // isOpen = true;
+        //}
+
+        //public new void Close() 
+        //{
+        //    base.Close();
+        //    isOpen = false;
+        //}
+
     }
 }
