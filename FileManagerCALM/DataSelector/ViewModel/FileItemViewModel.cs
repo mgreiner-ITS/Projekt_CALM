@@ -79,6 +79,7 @@ namespace DataSelector.ViewModel
             Path = fileInfo.FullName;
             Name = fileInfo.Name;
             IconPath = FileIcon;
+            Partition = Path.Substring(0, 1);
         }
 
     }

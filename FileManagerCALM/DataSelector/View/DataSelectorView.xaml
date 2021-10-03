@@ -15,8 +15,10 @@
     <!--<Window.DataContext>
         <ViewModel:DataSeletorViewModel></ViewModel:DataSeletorViewModel>
     </Window.DataContext>-->
-
+    
     <Window.Resources>
+        
+        <!--Button style-->
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Background">
                 <Setter.Value>
@@ -28,6 +30,10 @@
 
             </Setter>
         </Style>
+        
+        
+        <Image x:Key="BackArrowIcon" Source="pack://application:,,,/Resources/back.png"/>
+        
     </Window.Resources>
 
     <DockPanel>
@@ -149,11 +155,11 @@
             </GroupBox>
 
             <!--GroupBox of the File Selection-->
-            <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Header="File Selection" BorderBrush="Blue" BorderThickness="1">
+            <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Header="File Selection" BorderBrush="Blue" BorderThickness="1">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                     
-                    <ContentControl>
-                        <View:DirectoryView/>
+                    <ContentControl Content="{Binding DetailView, Mode=OneWay}">
+                        <!--<View:DirectoryView/>-->
                     </ContentControl>
 
                 </ScrollViewer>

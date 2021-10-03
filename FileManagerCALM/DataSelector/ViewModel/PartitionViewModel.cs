@@ -18,30 +18,33 @@ namespace DataSelector.ViewModel
         private readonly FileFinder _fileFinder;
 
         public string Name { get; set; }
+        public string FullName { get; set; }
         public DriveType DriveType { get; set; }
         public bool IsReady { get; set; }
         public ObservableCollection<ItemViewModel> Items { get; set; } = new ObservableCollection<ItemViewModel>();
         public PartitionViewModel(DriveInfo driveInfo)
         {
             _fileFinder = new FileFinder();
+            FullName = driveInfo.Name;
             Name = driveInfo.Name.Split(':').FirstOrDefault() != null ? driveInfo.Name.Split(':').FirstOrDefault() :string.Empty;
             DriveType = driveInfo.DriveType;
             IsReady = driveInfo.IsReady;
-            InitializeItems();
-            //CreateSampleItems();
+            //InitializeItems();
         }
 
-        private void InitializeItems()
+        public void InitializeItems()
         {
             var items = _fileFinder.FindFiles(new DriveInfo(Name));
-
+            Items.Clear();
             foreach (var directoryName in items.directories)
             {
-                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel
-                {
-                    Name = Path.GetFileName(directoryName),
-                    Path = directoryName
-                };
+                //DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel
+                //{
+                //    Name = Path.GetFileName(directoryName),
+                //    Path = directoryName
+                //};
+                DirectoryItemViewModel directoryViewModel = new DirectoryItemViewModel(directoryName);
+
                 Items.Add(directoryViewModel);
             }
 

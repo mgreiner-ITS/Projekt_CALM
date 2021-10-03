@@ -22,17 +22,12 @@ namespace DataSelector
     /// </summary>
     public partial class DataSelectorView : Window
     {
-        DataSeletorViewModel _dataSeletorViewModel;
         public DataSelectorView()
         {
             InitializeComponent();
 
             var vm = new DataSeletorViewModel();
             DataContext = vm;
-            //_dataSeletorViewModel = new DataSeletorViewModel();
-            //DataContext = _dataSeletorViewModel;
-
-            //_dataSeletorViewModel.selectionList = (ListBox)this.FindName("SelectionList");
 
         }
 

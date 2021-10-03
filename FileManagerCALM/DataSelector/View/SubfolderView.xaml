@@ -4,26 +4,68 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataSelector.View"
+             xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
 
-        <ListView ItemsSource="{Binding SelectedDirectory.SubItemViewModels, Mode=OneWay}"
-              SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+    <UserControl.Resources>
+        <Image x:Key="BackArrowIcon" Source="pack://application:,,,/Resources/back.png"/>
+    </UserControl.Resources>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="20" Source="pack://application:,,,/Resources/folder.png"/>
-                        <TextBlock Margin="5,0,0,0" 
-                                           Text="{Binding Name}" 
-                                           HorizontalAlignment="Left" 
-                                           VerticalAlignment="Center"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="30" 
+                        Content="{StaticResource BackArrowIcon}"
+                        Command="{Binding GoBackCommand}"/>
+                <Separator/>
+                <TextBox Width="400" Text="{Binding SelectedDirectory.Path, Mode=OneWay}"/>
+                <Separator/>
+                <ToggleButton Width="100" Content="Select all">
+                    <behaviour:Interaction.Triggers>
+                        <behaviour:EventTrigger EventName="Checked">
+                            <behaviour:InvokeCommandAction Command="{Binding SelectAllCommand, Mode=OneWay}"/>
+                        </behaviour:EventTrigger>
+                        <behaviour:EventTrigger EventName="Unchecked">
+                            <behaviour:InvokeCommandAction Command="{Binding UnselectAllCommand, Mode=OneWay}"/>
+                        </behaviour:EventTrigger>
+                    </behaviour:Interaction.Triggers>
+                </ToggleButton>
+            </ToolBar>
+        </ToolBarTray>
 
-        </ListView>
+        <Grid>
+            
+            <ListView ItemsSource="{Binding SelectedDirectory.SubItemViewModels, Mode=OneWay}"
+                      Name="SubFolderListView"
+                      MouseDoubleClick="SubFolderListView_MouseDoubleClick">
 
-    </Grid>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox Grid.Column="0" 
+                                      IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                <Image Width="20" Source="{Binding IconPath, Mode=OneWay}"/>
+                                <TextBlock Margin="5,0,0,0" 
+                                                   Text="{Binding Name}" 
+                                                   HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Grid>
+    </DockPanel>
 </UserControl>

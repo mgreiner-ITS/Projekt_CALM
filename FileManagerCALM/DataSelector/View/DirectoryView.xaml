@@ -4,38 +4,68 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataSelector.View"
+             xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ListView ItemsSource="{Binding SelectedPartition.Items}"
-                  SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  x:Name="DirectoryListView">
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
+    <UserControl.Resources>
+        <Image x:Key="BackArrowIcon" Source="pack://application:,,,/Resources/back.png"/>
+    </UserControl.Resources>
+    
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="30" 
+                        Content="{StaticResource BackArrowIcon}"
+                        Command="{Binding GoBackCommand, Mode=OneWay}"/>
+                <Separator/>
+                <TextBox Width="400" Text="{Binding SelectedPartition.FullName, Mode=OneWay}"/>
+                <Separator/>
+                <ToggleButton Width="100" Content="Select all">
+                    <behaviour:Interaction.Triggers>
+                        <behaviour:EventTrigger EventName="Checked">
+                            <behaviour:InvokeCommandAction Command="{Binding SelectAllCommand, Mode=OneWay}"/>
+                        </behaviour:EventTrigger>
+                        <behaviour:EventTrigger EventName="Unchecked">
+                            <behaviour:InvokeCommandAction Command="{Binding UnselectAllCommand, Mode=OneWay}"/>
+                        </behaviour:EventTrigger>
+                    </behaviour:Interaction.Triggers>
+                </ToggleButton>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            
+            <ListView ItemsSource="{Binding SelectedPartition.Items}"
+                      SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      x:Name="DirectoryListView"
+                      MouseDoubleClick="DirectoryListView_MouseDoubleClick">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
 
-                        <CheckBox Grid.Column="0" 
-                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="2" 
-                                Orientation="Horizontal">
-                            <Image Width="20" Source="{Binding IconPath, Mode=OneWay}"/>
-                            <TextBlock Margin="5,0,0,0" 
+                            <CheckBox Grid.Column="0" 
+                                  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <StackPanel Grid.Column="2" 
+                                    Orientation="Horizontal">
+                                <Image Width="20" Source="{Binding IconPath, Mode=OneWay}"/>
+                                <TextBlock Margin="5,0,0,0" 
                                            Text="{Binding Name}" 
                                            HorizontalAlignment="Left" 
                                            VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
-        </ListView>
-    </Grid>
+            </ListView>
+        </Grid>
+    </DockPanel>
 </UserControl>

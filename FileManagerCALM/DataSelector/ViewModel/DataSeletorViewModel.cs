@@ -36,13 +36,16 @@ namespace DataSelector.ViewModel
 
         public ObservableCollection<ItemViewModel> SelectedItemViewModels { get; set; } = new ObservableCollection<ItemViewModel>();
 
-
+        public List<FileItemViewModel> SelectedFiles { get; set; } = new List<FileItemViewModel>();
 
 
         public ICommand WindowLoadedCommand { get; set; }
-
+        public ICommand ShowSearchWindowCmd { get; private set; }
         public RelayCommand SyncCommand { get; set; }
         public RelayCommand CancelSyncCommand { get; set; }
+        public RelayCommand GoBackCommand { get; set; }
+        public RelayCommand SelectAllCommand { get; set; }
+        public RelayCommand UnselectAllCommand { get; set; }
 
         public DataSeletorViewModel()
         {
@@ -52,6 +55,9 @@ namespace DataSelector.ViewModel
 
             SyncCommand = new RelayCommand(unused => Sync());
             CancelSyncCommand = new RelayCommand(unused => CancelSync());
+            GoBackCommand = new RelayCommand(unused => GoBack());
+            SelectAllCommand = new RelayCommand(unused => SelectAll());
+            UnselectAllCommand = new RelayCommand(unused => UnselectAll());
 
             MonitorUsbInputs();
 
@@ -83,15 +89,92 @@ namespace DataSelector.ViewModel
             SelectedItemViewModels.Add(fivm);
             //michael test ende :)
 
-            // Test
+            // Lai Test GUI
             ProgressBarProgress = 75;
 
         }
 
+        private void CancelSync()
+        {
+            cancelledSync = true;
+        }
 
+        private void ShowMethod()
+        {
+            SearchView objSearchView = new SearchView();
+            objSearchView.Show();
+        }
+
+
+        public PartitionViewModel SelectedPartition
+        {
+            get { return _selectedPartition; }
+            set
+            {
+                if(value != null)
+                {
+                    value.InitializeItems();
+                    _selectedPartition = value;
+                    DetailView = new DirectoryView();
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public DirectoryItemViewModel SelectedDirectory
+        {
+            get { return _selectedDirectory; }
+            set
+            {
+                if(value != null)
+                {
+                    _selectedDirectory = value;
+                    _selectedDirectory.InitializeSubItems();
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public DirectoryItemViewModel ParentDirectory { get; set; }
+
+        private int _progressBarProgress;
+        public int ProgressBarProgress
+        {
+            get { return _progressBarProgress; }
+            set
+            {
+                _progressBarProgress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private object _detailView;
+
+        public object DetailView
+        {
+            get { return _detailView; }
+            set
+            {
+                _detailView = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void GetAllPartions()
+        {
+            Partitions.Clear();
+            foreach (var item in _fileFinder.FindPartitions())
+            {
+                PartitionViewModel partitionViewModel = new PartitionViewModel(item);
+
+                Partitions.Add(partitionViewModel);
+
+            }
+        }
 
         private void Sync()
         {
+            GetAllFilesFromSelectedItems();
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
             FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
@@ -122,65 +205,6 @@ namespace DataSelector.ViewModel
             );
         }
 
-        private void CancelSync()
-        {
-            cancelledSync = true;
-        }
-
-        private void ShowMethod()
-        {
-            SearchView objSearchView = new SearchView();
-            objSearchView.Show();
-        }
-
-        public ICommand ShowSearchWindowCmd { get; private set; }
-        private void GetAllPartions()
-        {
-            Partitions.Clear();
-            foreach (var item in _fileFinder.FindPartitions())
-            {
-                PartitionViewModel partitionViewModel = new PartitionViewModel(item);
-
-
-                Partitions.Add(partitionViewModel);
-
-            }
-        }
-
-
-        public PartitionViewModel SelectedPartition
-        {
-            get { return _selectedPartition; }
-            set
-            {
-                _selectedPartition = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public DirectoryItemViewModel SelectedDirectory
-        {
-            get { return _selectedDirectory; }
-            set
-            {
-                _selectedDirectory = value;
-                OnPropertyChanged();
-            }
-        }
-
-        //     selectionList.ItemsSource = list;
-        private int _progressBarProgress;
-        public int ProgressBarProgress
-        {
-            get { return _progressBarProgress; }
-            set
-            {
-                _progressBarProgress = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         public void MonitorUsbInputs()
         {
             ManagementEventWatcher insertWatcher = new ManagementEventWatcher();
@@ -201,6 +225,68 @@ namespace DataSelector.ViewModel
         private void Watcher_UsbRemoved(object sender, EventArrivedEventArgs e) => WatcherLogic();
         private void WatcherLogic() => GetAllPartions();
 
+        public void NavigateTo(object detailView)
+        {
+            DetailView = detailView;
+        }
+
+        private void GoBack()
+        {
+            if (SelectedDirectory == null) return;
+            var parent = Directory.GetParent(SelectedDirectory.Path);
+            if(parent != null)
+            {
+                SelectedDirectory = new DirectoryItemViewModel(Directory.GetParent(SelectedDirectory.Path).FullName);
+                OnPropertyChanged(nameof(SelectedDirectory));
+            }
+        }
+
+        private void SelectAll()
+        {
+            if(SelectedPartition != null && SelectedDirectory == null)
+            {
+                foreach (var item in SelectedPartition.Items)
+                    item.IsSelected = true;
+            }
+            if (SelectedDirectory != null)
+                foreach (var item in SelectedDirectory.SubItemViewModels)
+                    item.IsSelected = true;
+        }
+
+        private void UnselectAll()
+        {
+            if (SelectedPartition != null && SelectedDirectory == null)
+                foreach (var item in SelectedPartition.Items)
+                    item.IsSelected = false;
+
+            if (SelectedDirectory != null)
+                foreach (var item in SelectedDirectory.SubItemViewModels)
+                    item.IsSelected = false;
+        }
+
+        /// <summary>
+        /// To get all files from the seletected directories and add these files into the list SelectedFiles
+        /// </summary>
+        private void GetAllFilesFromSelectedItems()
+        {
+            SelectedFiles.Clear();
+            foreach (var item in SelectedPartition.Items)
+            {
+                if(item.IsSelected)
+                {
+                    if(item is FileItemViewModel file)
+                    {
+                        SelectedFiles.Add(file);
+                    }
+                    else if(item is DirectoryItemViewModel directory)
+                    {
+                        var files = directory.GetAllFiles(directory.Path);
+                        files.ForEach(f => f.IsSelected = true);
+                        SelectedFiles.AddRange(files);
+                    }
+                }
+            }
+        }
     }
 }
 
