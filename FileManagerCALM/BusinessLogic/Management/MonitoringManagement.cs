@@ -70,6 +70,8 @@ namespace BusinessLogic.Management
         private void Watcher_Renamed(object sender, RenamedEventArgs e)
         {
             var fileItem = FindFileItem(e.OldFullPath);
+            fileItem.Path = e.FullPath;
+            fileItem.Name = e.Name;
 
             if (fileItem != null)
                 _db.UpdateItems(fileItem, e.OldFullPath);

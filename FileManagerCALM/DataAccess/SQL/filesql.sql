@@ -32,7 +32,7 @@ CREATE TABLE `filesql` (
   `Path` text NOT NULL,
   `Content` text NOT NULL,
   `Partitions` varchar(3) NOT NULL,
-  `LastModified` date NOT NULL,
+  `LastModified` datetime NOT NULL,
   `DataType` text NOT NULL,
   `DataName` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -61,3 +61,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `filesql` ADD FULLTEXT(`Content`);

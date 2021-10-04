@@ -12,7 +12,7 @@ namespace DataSelector.ViewModel
     public class SearchViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        //FileOpener _fileOpener;
+        FileOpener _fileOpener;
 
         BusinessLogic.Management.SearchManagement _searchItem;
         List<FileItem> listItems;
@@ -44,7 +44,7 @@ namespace DataSelector.ViewModel
 
         private void ShowFile()
         {
-            //_fileOpener = new BusinessLogic.Management.FileOpener(SelectedItem);
+            _fileOpener = new BusinessLogic.Management.FileOpener(SelectedItem);
 
         }
 

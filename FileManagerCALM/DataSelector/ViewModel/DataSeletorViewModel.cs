@@ -75,7 +75,7 @@ namespace DataSelector.ViewModel
 
         private void Sync()
         {
-            //GetAllFilesFromSelectedItems();
+            GetAllFilesFromSelectedItems();
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
             FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
@@ -93,7 +93,22 @@ namespace DataSelector.ViewModel
                     if (cancelledSync)
                         break;
 
+                    //try(
+                    //oldFile = getfile(fullpath)
+                    //    if (checkFileWasChanged)
+                    //        update
+                    //    else
+                    //        donothing
+                    //)
+                    //catch
+                    //(
+                    //    upload
+                    //)
+                   
+                   
+
                     ItemViewModelConverter converter = new ItemViewModelConverter();
+
                     var fileItem = fileReader.ReadFile(currentFileViewModel.Path, currentFileViewModel.LastModified);
 
                     numberOfProcessedItems++;
@@ -111,8 +126,8 @@ namespace DataSelector.ViewModel
 
         SearchView objSearchView = null;
         private void ShowMethod()
-        {
-            if (objSearchView == null)
+        {/// Abfragen ob, das Fenst SearchUi schon angezeigt ist, wenn ja dann sollte keine neue UI anzeigen - Nguyen
+            if (objSearchView == null )
             {
                 objSearchView = new SearchView();
                 objSearchView.Closed += (sender, args) => objSearchView = null;

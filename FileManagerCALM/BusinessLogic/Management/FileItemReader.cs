@@ -12,7 +12,6 @@ namespace BusinessLogic.Management
         public static TextExtractorD extractor = new TextExtractorD();
         public static int n = 0;
         public static Dictionary<DirectoryInfo, long> Dir = new Dictionary<DirectoryInfo, long>();
-        public static string baseDir = @"D:\Test";
 
         public FileItem ReadFile(string fullFilePath, DateTime lastModified)
         {
