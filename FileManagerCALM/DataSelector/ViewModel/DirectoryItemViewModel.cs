@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace DataSelector.ViewModel
 {
@@ -63,7 +64,11 @@ namespace DataSelector.ViewModel
             {
                 foreach (var filePath in Directory.GetFiles(path))
                 {
-                    files.Add(new FileItemViewModel(new FileInfo(filePath)));
+                    //files.Add(new FileItemViewModel(new FileInfo(filePath)));
+                    InitializeSubItems();
+                    var fileToAdd = (FileItemViewModel)SubItemViewModels.Where(item => item.Path.Equals(filePath)).FirstOrDefault();
+                    if(fileToAdd != null)
+                        files.Add(fileToAdd);
                 }
             }
             catch (Exception ex)

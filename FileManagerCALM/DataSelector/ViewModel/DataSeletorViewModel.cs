@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace DataSelector.ViewModel
 {
@@ -21,6 +22,7 @@ namespace DataSelector.ViewModel
         private readonly FileFinder _fileFinder;
         private readonly UploadManagement _uploadManagement;
         private readonly MonitoringManagement _watcherManagement;
+        private readonly SynchronizationContext _synchronizationContext;
 
         private PartitionViewModel _selectedPartition;
         private DirectoryItemViewModel _selectedDirectory;
@@ -47,6 +49,8 @@ namespace DataSelector.ViewModel
 
         public DataSeletorViewModel()
         {
+            _synchronizationContext = SynchronizationContext.Current;
+
             _uploadManagement = new UploadManagement();
             _watcherManagement = new MonitoringManagement();
 
@@ -71,7 +75,8 @@ namespace DataSelector.ViewModel
 
         private void Sync()
         {
-            GetAllFilesFromSelectedItems();
+            //GetAllFilesFromSelectedItems();
+            List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
             FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
 
@@ -107,7 +112,7 @@ namespace DataSelector.ViewModel
         SearchView objSearchView = null;
         private void ShowMethod()
         {
-            if (objSearchView == null )
+            if (objSearchView == null)
             {
                 objSearchView = new SearchView();
                 objSearchView.Closed += (sender, args) => objSearchView = null;
@@ -121,7 +126,7 @@ namespace DataSelector.ViewModel
             set
             {
                 _selectedPartition = value;
-                if(value != null)
+                if (value != null)
                 {
                     SelectedDirectory = null;
                     value.InitializeItems();
@@ -137,15 +142,13 @@ namespace DataSelector.ViewModel
             set
             {
                 _selectedDirectory = value;
-                if(value != null)
+                if (value != null)
                 {
                     _selectedDirectory.InitializeSubItems();
                 }
                 OnPropertyChanged();
             }
         }
-
-        //public DirectoryItemViewModel ParentDirectory { get; set; }
 
         private int _progressBarProgress;
         public int ProgressBarProgress
@@ -172,13 +175,12 @@ namespace DataSelector.ViewModel
 
         private void GetAllPartions()
         {
-            Partitions.Clear();
+            _synchronizationContext.Send(unused => { Partitions.Clear(); }, null);
+
             foreach (var item in _fileFinder.FindPartitions())
             {
                 PartitionViewModel partitionViewModel = new PartitionViewModel(item);
-
-                Partitions.Add(partitionViewModel);
-
+                _synchronizationContext.Send(unused => { Partitions.Add(partitionViewModel); }, null);
             }
         }
 
@@ -212,7 +214,7 @@ namespace DataSelector.ViewModel
         {
             if (SelectedDirectory == null) return;
             var parent = Directory.GetParent(SelectedDirectory.Path);
-            if(parent != null)
+            if (parent != null)
             {
                 SelectedDirectory = new DirectoryItemViewModel(Directory.GetParent(SelectedDirectory.Path).FullName);
                 OnPropertyChanged(nameof(SelectedDirectory));
@@ -221,7 +223,7 @@ namespace DataSelector.ViewModel
 
         private void SelectAll()
         {
-            if(SelectedPartition != null && SelectedDirectory == null)
+            if (SelectedPartition != null && SelectedDirectory == null)
             {
                 foreach (var item in SelectedPartition.Items)
                 {
@@ -261,15 +263,27 @@ namespace DataSelector.ViewModel
         private void GetAllFilesFromSelectedItems()
         {
             SelectedFiles.Clear();
-            foreach (var item in SelectedPartition.Items)
+            if (SelectedDirectory != null)
             {
-                if(item.IsSelected)
+                foreach (var item in SelectedDirectory.SubItemViewModels)
                 {
-                    if(item is FileItemViewModel file)
-                    {
+                    if (item is FileItemViewModel file && file.IsSelected)
                         SelectedFiles.Add(file);
+                    else if (item is DirectoryItemViewModel directory && directory.IsSelected)
+                    {
+                        var files = directory.GetAllFiles(directory.Path);
+                        files.ForEach(f => f.IsSelected = true);
+                        SelectedFiles.AddRange(directory.GetAllFiles(directory.Path));
                     }
-                    else if(item is DirectoryItemViewModel directory)
+                }
+            }
+            else
+            {
+                foreach (var item in SelectedPartition.Items)
+                {
+                    if (item is FileItemViewModel file && file.IsSelected)
+                        SelectedFiles.Add(file);
+                    else if (item is DirectoryItemViewModel directory && directory.IsSelected)
                     {
                         var files = directory.GetAllFiles(directory.Path);
                         files.ForEach(f => f.IsSelected = true);
