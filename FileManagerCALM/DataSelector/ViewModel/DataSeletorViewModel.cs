@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +20,7 @@ namespace DataSelector.ViewModel
     {
         private readonly FileFinder _fileFinder;
         private readonly UploadManagement _uploadManagement;
+        private readonly MonitoringManagement _watcherManagement;
 
         private PartitionViewModel _selectedPartition;
         private DirectoryItemViewModel _selectedDirectory;
@@ -46,6 +48,8 @@ namespace DataSelector.ViewModel
         public DataSeletorViewModel()
         {
             _uploadManagement = new UploadManagement();
+            _watcherManagement = new MonitoringManagement();
+
             ShowSearchWindowCmd = new DelegateCommand(ShowMethod);
             _fileFinder = new FileFinder();
 
@@ -56,38 +60,11 @@ namespace DataSelector.ViewModel
             UnselectAllCommand = new RelayCommand(unused => UnselectAll());
 
             MonitorUsbInputs();
-
-
             GetAllPartions();
+            SetWatcherForFiles();
 
             SelectionOverview.Add(new TreeViewItem() { Header = "Test" }
                                                        );
-
-            //michael test :)
-            //FileItemViewModel fivm = new FileItemViewModel
-            //{
-            //    Name = "asd",
-            //    Path = "c:/asd",
-            //    LastModified = new DateTime(),
-            //    Partition = "C",
-            //    Type = FileType.txt
-            //};
-
-            //DirectoryItemViewModel divm = new DirectoryItemViewModel
-            //{
-            //    Name = "folder",
-            //    Path = "c:/folder"
-            //};
-
-
-            //SelectedItemViewModels.Add(fivm);
-            //SelectedItemViewModels.Add(divm);
-            //SelectedItemViewModels.Add(fivm);
-            ////michael test ende :)
-
-            //// Test
-            //ProgressBarProgress = 75;
-
         }
 
 
@@ -101,6 +78,9 @@ namespace DataSelector.ViewModel
             double numberOfItems = SelectedFiles.Count();
             double numberOfProcessedItems = 0;
             ProgressBarProgress = 0;
+
+            var sync = SynchronizationContext.Current;
+
             Task.Run(() =>
             {
                 foreach (FileItemViewModel currentFileViewModel in SelectedFiles)
@@ -109,13 +89,14 @@ namespace DataSelector.ViewModel
                         break;
 
                     ItemViewModelConverter converter = new ItemViewModelConverter();
-                    _uploadManagement.InsertItem(fileReader.ReadFile(currentFileViewModel.Path, currentFileViewModel.LastModified));
+                    var fileItem = fileReader.ReadFile(currentFileViewModel.Path, currentFileViewModel.LastModified);
 
                     numberOfProcessedItems++;
+
+                    _uploadManagement.InsertItem(fileItem);
                     ProgressBarProgress = (int)((numberOfProcessedItems / numberOfItems) * 100);
                 }
-            }
-            );
+            });
         }
 
         private void CancelSync()
@@ -297,6 +278,10 @@ namespace DataSelector.ViewModel
                 }
             }
         }
+
+        private void SetWatcherForFiles()
+        {
+            _watcherManagement.InitialzeWatcher();
+        }
     }
 }
-

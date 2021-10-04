@@ -56,6 +56,7 @@
     <Compile Include="Management\FileOpener.cs" />
     <Compile Include="Management\SearchManagement.cs" />
     <Compile Include="Management\UploadManagement.cs" />
+    <Compile Include="Management\MonitoringManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

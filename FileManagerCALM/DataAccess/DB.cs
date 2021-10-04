@@ -39,6 +39,31 @@ namespace DataAccess
 
 
         }
+
+        public List<FileItem> GetAllFileItems()
+        {
+            List<FileItem> listItems = new List<FileItem>();
+
+            sql = string.Format($"SELECT * FROM filesql;");
+            DataTable dt = dbmysql.Adapter.GetDataTable(sql);
+            foreach (DataRow r in dt.Rows)
+            {
+                FileItem item = new FileItem();
+                item.Id = Convert.ToInt64(r[0]);
+                item.Path = r[1].ToString();
+                item.Content = r[2].ToString();
+                item.Partition = r[3].ToString();
+                item.LastModified = Convert.ToDateTime(r[4]);
+                item.Type = (FileType)Enum.Parse(typeof(FileType), r[5].ToString());
+                item.Name = r[6].ToString();
+
+
+                listItems.Add(item);
+            }
+
+            return listItems;
+        }
+
         /// <summary>
         /// Dateien im DB Speichern
         /// </summary>

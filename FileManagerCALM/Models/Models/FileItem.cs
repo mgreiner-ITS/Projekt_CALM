@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
@@ -15,19 +11,8 @@ namespace Models
         public string Path { get; set; }
         public string Partition { get; set; }
         public DateTime LastModified { get; set; }
-
-        Status _status;
-
-        public FileType getTyp()
-        {
-
-            return Type;
-
-
-        }
-
     }
-   
+
 
 
 }
