@@ -36,9 +36,9 @@
         <Grid>
             
             <ListView ItemsSource="{Binding SelectedPartition.Items}"
-                      SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       x:Name="DirectoryListView"
                       MouseDoubleClick="DirectoryListView_MouseDoubleClick">
+                      <!--SelectedItem="{Binding SelectedDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
 
                 <ListView.ItemTemplate>
                     <DataTemplate>

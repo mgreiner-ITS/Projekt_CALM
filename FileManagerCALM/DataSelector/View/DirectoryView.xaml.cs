@@ -38,7 +38,8 @@ namespace DataSelector.View
                 }
 
                 DataSeletorViewModel dataSelectorViewModel = parent.DataContext as DataSeletorViewModel;
-                dataSelectorViewModel.ParentDirectory = dataSelectorViewModel.SelectedDirectory;
+                //dataSelectorViewModel.ParentDirectory = dataSelectorViewModel.SelectedDirectory;
+                dataSelectorViewModel.SelectedDirectory = DirectoryListView.SelectedItem as DirectoryItemViewModel;
                 var subFolderView = new SubfolderView();
                 dataSelectorViewModel.NavigateTo(subFolderView);
             }

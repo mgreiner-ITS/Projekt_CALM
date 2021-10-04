@@ -143,10 +143,11 @@ namespace DataSelector.ViewModel
             get { return _selectedPartition; }
             set
             {
+                _selectedPartition = value;
                 if(value != null)
                 {
+                    SelectedDirectory = null;
                     value.InitializeItems();
-                    _selectedPartition = value;
                     DetailView = new DirectoryView();
                 }
                 OnPropertyChanged();
@@ -158,16 +159,16 @@ namespace DataSelector.ViewModel
             get { return _selectedDirectory; }
             set
             {
+                _selectedDirectory = value;
                 if(value != null)
                 {
-                    _selectedDirectory = value;
                     _selectedDirectory.InitializeSubItems();
                 }
                 OnPropertyChanged();
             }
         }
 
-        public DirectoryItemViewModel ParentDirectory { get; set; }
+        //public DirectoryItemViewModel ParentDirectory { get; set; }
 
         private int _progressBarProgress;
         public int ProgressBarProgress
@@ -246,22 +247,35 @@ namespace DataSelector.ViewModel
             if(SelectedPartition != null && SelectedDirectory == null)
             {
                 foreach (var item in SelectedPartition.Items)
+                {
                     item.IsSelected = true;
+                    OnPropertyChanged();
+                }
             }
-            if (SelectedDirectory != null)
+            else if (SelectedDirectory != null)
                 foreach (var item in SelectedDirectory.SubItemViewModels)
+                {
                     item.IsSelected = true;
+                    OnPropertyChanged();
+                }
         }
 
         private void UnselectAll()
         {
             if (SelectedPartition != null && SelectedDirectory == null)
                 foreach (var item in SelectedPartition.Items)
+                {
                     item.IsSelected = false;
+                    OnPropertyChanged();
+                }
 
-            if (SelectedDirectory != null)
+            else if (SelectedDirectory != null)
                 foreach (var item in SelectedDirectory.SubItemViewModels)
+                {
                     item.IsSelected = false;
+                    OnPropertyChanged();
+                }
+            OnPropertyChanged();
         }
 
         /// <summary>
