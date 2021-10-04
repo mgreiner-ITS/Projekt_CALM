@@ -94,27 +94,22 @@ namespace DataSelector.ViewModel
 
         private void Sync()
         {
-            List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
+            GetAllFilesFromSelectedItems();
             FileItemReader fileReader = new FileItemReader();
             cancelledSync = false;
 
-            double numberOfItems = itemViewModels.Count();
+            double numberOfItems = SelectedFiles.Count();
             double numberOfProcessedItems = 0;
             ProgressBarProgress = 0;
             Task.Run(() =>
             {
-                foreach (ItemViewModel currentItemViewModel in itemViewModels)
+                foreach (FileItemViewModel currentFileViewModel in SelectedFiles)
                 {
                     if (cancelledSync)
                         break;
 
-                    if (currentItemViewModel.GetType() == typeof(FileItemViewModel))
-                    {
-                        ItemViewModelConverter converter = new ItemViewModelConverter();
-                        _uploadManagement.InsertItem(fileReader.ReadFile(currentItemViewModel.Name));
-                        //TODO die nächste zeile (& somit den converter) braucht man nicht mehr? weil der "convert" automatisch beim read passiert?
-                        //_uploadManagement.InsertItem(converter.convert((FileItemViewModel)currentItemViewModel));
-                    }
+                    ItemViewModelConverter converter = new ItemViewModelConverter();
+                    _uploadManagement.InsertItem(fileReader.ReadFile(currentFileViewModel.Path, currentFileViewModel.LastModified));
 
                     numberOfProcessedItems++;
                     ProgressBarProgress = (int)((numberOfProcessedItems / numberOfItems) * 100);
@@ -127,6 +122,7 @@ namespace DataSelector.ViewModel
         {
             cancelledSync = true;
         }
+
         SearchView objSearchView = null;
         private void ShowMethod()
         {

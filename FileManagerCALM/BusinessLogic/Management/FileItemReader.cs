@@ -14,7 +14,7 @@ namespace BusinessLogic.Management
         public static Dictionary<DirectoryInfo, long> Dir = new Dictionary<DirectoryInfo, long>();
         public static string baseDir = @"D:\Test";
 
-        public FileItem ReadFile(string fullFilePath)
+        public FileItem ReadFile(string fullFilePath, DateTime lastModified)
         {
             FileItem fileItem = new FileItem
             {
@@ -22,8 +22,8 @@ namespace BusinessLogic.Management
                 Name = ParseFileName(fullFilePath),
                 Type = ParseType(fullFilePath),
                 Content = extractor.Extract(fullFilePath),
-                Partition = ParsePartition(fullFilePath)
-                //TODO last modified herausfinden & setzen
+                Partition = ParsePartition(fullFilePath),
+                LastModified = lastModified
             };
 
             return fileItem;
