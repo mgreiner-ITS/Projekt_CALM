@@ -49,7 +49,7 @@ namespace DataAccess
             // INSERT INTO `filesql` (`ID`, `Path`, `Content`, `Partitions`, `LastModified`, `DataType`, `DataName`)
             // VALUES(NULL, 'C:\\Users\\winkler\\OneDrive - frrfrfrf44\\Desktop\\Deutschkurs', 'Test 123', 'C', '2021-09-14', 'txt', 'Text');
             sql = string.Format($"INSERT INTO `filesql` (`ID`, `Path`, `Content`, `Partitions`, `LastModified`, `DataType`, `DataName`) VALUES (NULL, '{newItem.Path}', '{newItem.Content}', '{newItem.Partition}', '{newItem.LastModified}', '{newItem.Type}', '{newItem.Name}'); ");
-            DataTable t1 = dbmysql.Adapter.GetDataTable(sql);
+        
 
 
             try
@@ -79,8 +79,8 @@ namespace DataAccess
             List<FileItem> listItems = new List<FileItem>();
             if (searchText != null)
             {
-
-                sql = string.Format($"SELECT * FROM filesql Where Content Like '%{searchText}%' ;");
+               // SELECT* FROM filesql WHERE MATCH(Content) AGAINST('Datenbank');
+                sql = string.Format($"SELECT * from filesql where MATCH (Content) AGAINST('{searchText}');");
                 DataTable dt = dbmysql.Adapter.GetDataTable(sql);
                 foreach (DataRow r in dt.Rows)
                 {
