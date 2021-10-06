@@ -60,7 +60,8 @@ namespace DataAccess
             return listItems;
         }
         // Es wird verwendet, um eine Datei zu überprüfen, bevor sie hochgeladen wird.
-        public DateTime GetFile(string path)
+        // Wirft eine Exception, wenn keine Datei gefunden wurde
+        public DateTime GetFileLastModified(string path) 
         {
            
             //SELECT * FROM `filesql` WHERE Path = 'D:\\brot.docx';

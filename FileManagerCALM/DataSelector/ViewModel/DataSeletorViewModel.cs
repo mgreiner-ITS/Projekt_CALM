@@ -4,6 +4,7 @@ using CommandHelper;
 using DataSelector.View;
 using Models;
 using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -93,27 +94,29 @@ namespace DataSelector.ViewModel
                     if (cancelledSync)
                         break;
 
-                    //try(
-                    //oldFile = getfile(fullpath)
-                    //    if (checkFileWasChanged)
-                    //        update
-                    //    else
-                    //        donothing
-                    //)
-                    //catch
-                    //(
-                    //    upload
-                    //)
-                   
-                   
+                    string currentFullPath = currentFileViewModel.Path;
+                    DateTime currentLastModified = currentFileViewModel.LastModified;
 
-                    ItemViewModelConverter converter = new ItemViewModelConverter();
-
-                    var fileItem = fileReader.ReadFile(currentFileViewModel.Path, currentFileViewModel.LastModified);
+                    var fileItem = fileReader.ReadFile(currentFullPath, currentFileViewModel.LastModified);
+                    
+                    try
+                    {
+                        DateTime dbLastModified = _uploadManagement.SearchLastModified(currentFullPath);
+                        if (currentLastModified.CompareTo(dbLastModified) > 0)
+                        {
+                            _uploadManagement.UpdateFile(fileItem);
+                        }
+                        else
+                        {
+                            //Do nothing, identical file already exists in the database
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        _uploadManagement.InsertFile(fileItem);
+                    }
 
                     numberOfProcessedItems++;
-
-                    _uploadManagement.InsertItem(fileItem);
                     ProgressBarProgress = (int)((numberOfProcessedItems / numberOfItems) * 100);
                 }
             });
