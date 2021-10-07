@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:DataSelector"
              StartupUri="View/DataSelectorView.xaml">
     <Application.Resources>
-         
+     
     </Application.Resources>
 </Application>

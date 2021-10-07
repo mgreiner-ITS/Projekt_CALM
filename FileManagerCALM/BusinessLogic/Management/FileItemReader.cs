@@ -57,9 +57,6 @@ namespace BusinessLogic.Management
             string[] fileNameParts = filePathParts[filePathParts.Length - 1].Split('.');
             string typeString = fileNameParts[fileNameParts.Length - 1];
 
-            //TODO das zu einem schönen switch machen, schadewa java 7.3 oder so erlaubt das nicht :(
-            //So vielleicht?
-            //Enum.TryParse(typeString, out FileType fileType);
             FileType fileType;
 
             if (typeString == FileType.pdf.ToString())

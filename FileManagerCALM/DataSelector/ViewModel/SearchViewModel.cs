@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using BusinessLogic.Management;
+using Microsoft.Xaml.Behaviors.Core;
 
 namespace DataSelector.ViewModel
 {
@@ -18,6 +19,19 @@ namespace DataSelector.ViewModel
         List<FileItem> listItems;
         public ObservableCollection<FileItem> fileItems { get; set; } = new ObservableCollection<FileItem>();
         public ICommand SearchDataCommand { get; set; }
+       
+        private ICommand _enterCmd;
+        public ICommand EnterCmd
+        {
+            get
+            {
+                return _enterCmd
+                    ?? (_enterCmd = new ActionCommand(() =>
+                    {
+                        SearchData();
+                    }));
+            }
+        }
         public ICommand DoubleClickCommand { get; set; }
         //public ICollectionView CollectionView { get; set; }
         FileItem _selectedItem;
@@ -28,6 +42,7 @@ namespace DataSelector.ViewModel
 
           
             SearchDataCommand = new RelayCommand(c => SearchData());
+          
             DoubleClickCommand = new RelayCommand(c => ShowFile());
 
         }
@@ -47,8 +62,8 @@ namespace DataSelector.ViewModel
             _fileOpener = new BusinessLogic.Management.FileOpener(SelectedItem);
 
         }
+  
 
-     
         private void SearchData()
         {
             fileItems.Clear();

@@ -78,14 +78,14 @@ namespace DataSelector.ViewModel
         {
             GetAllFilesFromSelectedItems();
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
-            FileItemReader fileReader = new FileItemReader();
+            
             cancelledSync = false;
 
             double numberOfItems = SelectedFiles.Count();
             double numberOfProcessedItems = 0;
             ProgressBarProgress = 0;
 
-            var sync = SynchronizationContext.Current;
+            //var sync = SynchronizationContext.Current;
 
             Task.Run(() =>
             {
@@ -94,27 +94,10 @@ namespace DataSelector.ViewModel
                     if (cancelledSync)
                         break;
 
-                    string currentFullPath = currentFileViewModel.Path;
-                    DateTime currentLastModified = currentFileViewModel.LastModified;
+                    ItemViewModelConverter converter = new ItemViewModelConverter();
+                    FileItem currentFileItem = converter.Convert(currentFileViewModel);
 
-                    var fileItem = fileReader.ReadFile(currentFullPath, currentFileViewModel.LastModified);
-                    
-                    try
-                    {
-                        DateTime dbLastModified = _uploadManagement.SearchLastModified(currentFullPath);
-                        if (currentLastModified.CompareTo(dbLastModified) > 0)
-                        {
-                            _uploadManagement.UpdateFile(fileItem);
-                        }
-                        else
-                        {
-                            //Do nothing, identical file already exists in the database
-                        }
-                    }
-                    catch (System.Exception)
-                    {
-                        _uploadManagement.InsertFile(fileItem);
-                    }
+                    _uploadManagement.UploadFile(currentFileItem);
 
                     numberOfProcessedItems++;
                     ProgressBarProgress = (int)((numberOfProcessedItems / numberOfItems) * 100);

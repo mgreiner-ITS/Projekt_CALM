@@ -3,55 +3,109 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DataSelector.View"
-        xmlns:ViewModel="clr-namespace:DataSelector.ViewModel"
         mc:Ignorable="d"
         Title="SearchView" Height="450" Width="800">
     <!--<Window.DataContext>
         <ViewModel:SearchViewModel/>
     </Window.DataContext>-->
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <!-- Search Button-->
+    <!-- DataGridCell Style-->
+    <Window.Resources>
+        <LinearGradientBrush x:Key="HeaderBrush">
+            <GradientStop Color="#e6e6fa" Offset="0.614"/>
+        </LinearGradientBrush>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBox Width="750"  
+        <Style  x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource HeaderBrush}"/>
+        </Style>
+
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="#f0f8ff" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top">
+            <!--<StackPanel  Grid.Row="0" Orientation="Horizontal" >-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="700"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox  Grid.Column="0"
                      Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Name="txtBox_search"  
-                     Foreground="Gray" 
-                     FontSize="17" 
-                     FontStyle="Italic">
-            </TextBox>
-            <Button  Name="btn_search"  Command="{Binding SearchDataCommand}"  Width="Auto" >
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="search.png" Stretch="Uniform" Height="25" Width="30" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
+                      Tag=" Search Full- Text "
+                     Foreground ="#031e37"  FontSize="17"   FontStyle="Italic"
+                     Style="{StaticResource MyWaterMarkStyle}" Margin="35,9,0,5" >
+                <TextBox.InputBindings>
+                 <KeyBinding Command="{Binding EnterCmd}" Key="Enter" />
+                </TextBox.InputBindings>
+                <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding fileItems}" SelectedItem="{Binding SelectedItem}"  CanUserAddRows="False"  AutoGenerateColumns="False">
-            <!--<Border >
-                <Border.InputBindings>
-                    <MouseBinding MouseAction ="click" Command="{Binding cmd}"">
-                        
-                    </MouseBinding>
-                </Border.InputBindings>
-            </Border>-->
-            <DataGrid.InputBindings>
-                <MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding DoubleClickCommand}"  />
+                <Button Grid.Column="1" Background="#c0d6e4" Name="btn_search"  Command="{Binding SearchDataCommand}" Margin="35,9,9.6,5"   >
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="MicrosoftTeams-image.png" Height="25" Width="25" Stretch="Uniform"  VerticalAlignment="Top" />
+                    </StackPanel>
+                </Button>
+            <!--</StackPanel>-->
+        </Grid>
 
-            </DataGrid.InputBindings>
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Path" Binding="{Binding Path = Path}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path = Name}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Path = Content}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Partition" Binding="{Binding Path = Partition}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="LastModified" Binding="{Binding Path = LastModified}" IsReadOnly="True"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
 
-    </Grid>
+        <GroupBox Grid.Row="1" BorderThickness="1"  BorderBrush="Blue">
+            <!--<Grid>-->
+
+            <DataGrid ColumnHeaderStyle ="{StaticResource HeaderStyle}" ItemsSource="{Binding fileItems}" SelectedItem="{Binding SelectedItem}"  CanUserAddRows="False"  AutoGenerateColumns="False" Margin="0,10,0,-0.4" >
+
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding DoubleClickCommand}"  />
+                </DataGrid.InputBindings>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Width="*" Header="Path" Binding="{Binding Path = Path}" IsReadOnly="True" CanUserResize="False">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path = Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Path = Content}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Partition" Binding="{Binding Path = Partition}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Last Modified" Binding="{Binding Path = LastModified}" IsReadOnly="True"></DataGridTextColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <!--</Grid>-->
+        </GroupBox>
+
+    </DockPanel>
 </Window>

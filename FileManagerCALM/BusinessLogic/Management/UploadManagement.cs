@@ -13,22 +13,41 @@ namespace BusinessLogic.Management
             database = new DB();
         }
 
-        public void InsertFile(FileItem file)
+        public void UploadFile( FileItem fileItemProxy )
         {
-            database.InsertData(file);
+            string currentFullPath = fileItemProxy.Path;
+            DateTime currentLastModified = fileItemProxy.LastModified;
+
+            FileItemReader fileReader = new FileItemReader();
+            var fileItem = fileReader.ReadFile(currentFullPath, fileItemProxy.LastModified);
+
+            try
+            {
+                DateTime dbLastModified = database.GetFileLastModified(currentFullPath);
+                if ( !AreDatesEqual( currentLastModified, dbLastModified ) )
+                {
+                    database.UpdateItems(fileItem, fileItem.Path);
+                }
+                else
+                {
+                    //Do nothing, identical file already exists in the database
+                }
+            }
+            catch (System.Exception)
+            {
+                database.InsertData(fileItem);
+            }
         }
 
-        /// <summary>
-        /// Throws an Exception when no file was found
-        /// </summary>
-        public DateTime SearchLastModified(string fullFilePath)
+        private bool AreDatesEqual( DateTime dateTime, DateTime otherDateTime)
         {
-            return database.GetFileLastModified(fullFilePath);
-        }
-
-        public void UpdateFile(FileItem file)
-        {
-            database.UpdateItems(file, file.Path);
+            if (dateTime.Year == otherDateTime.Year && dateTime.Month == otherDateTime.Month 
+                && dateTime.Day == otherDateTime.Day && dateTime.Hour == otherDateTime.Hour 
+                && dateTime.Minute == otherDateTime.Minute && dateTime.Second == otherDateTime.Second)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

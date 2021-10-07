@@ -14,6 +14,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -149,9 +151,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="View\search.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\file.png" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\MicrosoftTeams-image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
