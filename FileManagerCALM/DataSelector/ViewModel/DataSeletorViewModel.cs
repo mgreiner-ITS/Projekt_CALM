@@ -55,7 +55,7 @@ namespace DataSelector.ViewModel
             _uploadManagement = new UploadManagement();
             _watcherManagement = new MonitoringManagement();
 
-            ShowSearchWindowCmd = new DelegateCommand(ShowMethod);
+            ShowSearchWindowCmd = new DelegateCommand(ShowSearchWindow);
             _fileFinder = new FileFinder();
 
             SyncCommand = new RelayCommand(unused => Sync());
@@ -111,7 +111,7 @@ namespace DataSelector.ViewModel
         }
 
         SearchView objSearchView = null;
-        private void ShowMethod()
+        private void ShowSearchWindow()
         {/// Abfragen ob, das Fenst SearchUi schon angezeigt ist, wenn ja dann sollte keine neue UI anzeigen - Nguyen
             if (objSearchView == null )
             {
