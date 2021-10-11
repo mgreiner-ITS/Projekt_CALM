@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using Models;
 using System;
+using System.IO;
 
 namespace BusinessLogic.Management
 {
@@ -33,7 +34,7 @@ namespace BusinessLogic.Management
                     //Do nothing, identical file already exists in the database
                 }
             }
-            catch (System.Exception)
+            catch (FileNotFoundException)
             {
                 database.InsertData(fileItem);
             }

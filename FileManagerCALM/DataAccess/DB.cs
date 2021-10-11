@@ -4,6 +4,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 
 namespace DataAccess
 {
@@ -71,7 +72,7 @@ namespace DataAccess
             {
                 return Convert.ToDateTime(r[4]);
             }
-            throw new DataException("No file was found.");
+            throw new FileNotFoundException("No file was found.");
         }
 
         /// Dateien im DB Speichern
