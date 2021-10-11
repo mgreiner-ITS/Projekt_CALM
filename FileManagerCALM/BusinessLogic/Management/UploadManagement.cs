@@ -23,6 +23,10 @@ namespace BusinessLogic.Management
             FileReader fileReader = new FileReader();
             var fileItem = fileReader.ReadFile(currentFullPath, fileItemProxy.LastModified);
 
+            if (fileItem == null)
+                //File type was invalid and was not read
+                return;
+
             try
             {
                 DateTime dbLastModified = database.GetFileLastModified(currentFullPath);

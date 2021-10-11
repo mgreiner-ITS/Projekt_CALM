@@ -74,10 +74,9 @@ namespace BusinessLogic.Management
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            var fileItem = FindFileItem(e.FullPath);
-            if (fileItem != null)
+            var editedFileItem = _fileReader.ReadFile(e.FullPath, DateTime.Now);
+            if (editedFileItem != null)
             {
-                var editedFileItem = _fileReader.ReadFile(e.FullPath, DateTime.Now);
                 _db.UpdateItems(editedFileItem, e.FullPath);
             }
         }

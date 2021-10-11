@@ -13,6 +13,12 @@ namespace BusinessLogic.Management.FileManagement
         public static int n = 0;
         public static Dictionary<DirectoryInfo, long> Dir = new Dictionary<DirectoryInfo, long>();
 
+        /// <summary>
+        /// Reads a file from given fullFilePath and sets the given lastModified date
+        /// </summary>
+        /// <param name="fullFilePath"></param>
+        /// <param name="lastModified"></param>
+        /// <returns>FileItem with all properties OR null when unreadable filetype was detected</returns>
         public FileItem ReadFile(string fullFilePath, DateTime lastModified)
         {
             FileItem fileItem = new FileItem
@@ -23,10 +29,13 @@ namespace BusinessLogic.Management.FileManagement
                 Partition = ParsePartition(fullFilePath),
                 LastModified = lastModified
             };
+
             if (fileItem.Type == FileType.pdf)
                 fileItem.Content = extractor.ExtractPdf(fullFilePath);
-            else
+            else if (fileItem.Type == FileType.docx || fileItem.Type == FileType.txt || fileItem.Type == FileType.xlsx)
                 fileItem.Content = extractor.Extract(fullFilePath);
+            else
+                return null;
 
             return fileItem;
         }
