@@ -276,17 +276,18 @@ namespace DataSelector.ViewModel
             }
             else
             {
-                foreach (var item in SelectedPartition?.Items)
-                {
-                    if (item is FileItemViewModel file && file.IsSelected)
-                        SelectedFiles.Add(file);
-                    else if (item is DirectoryItemViewModel directory && directory.IsSelected)
+                if(SelectedPartition?.Items != null)
+                    foreach (var item in SelectedPartition?.Items)
                     {
-                        var files = directory.GetAllFiles(directory.Path);
-                        files.ForEach(f => f.IsSelected = true);
-                        SelectedFiles.AddRange(files);
+                        if (item is FileItemViewModel file && file.IsSelected)
+                            SelectedFiles.Add(file);
+                        else if (item is DirectoryItemViewModel directory && directory.IsSelected)
+                        {
+                            var files = directory.GetAllFiles(directory.Path);
+                            files.ForEach(f => f.IsSelected = true);
+                            SelectedFiles.AddRange(files);
+                        }
                     }
-                }
             }
         }
 

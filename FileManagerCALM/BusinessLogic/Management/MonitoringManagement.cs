@@ -37,7 +37,15 @@ namespace BusinessLogic.Management
                     if (!monitoredDirectoryPaths.Contains(fileInfo.Directory.FullName))
                     {
                         FileSystemWatcher watcher = new FileSystemWatcher(fileInfo.Directory.FullName);
-                        watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
+                        watcher.NotifyFilter = NotifyFilters.Attributes
+                                             | NotifyFilters.CreationTime
+                                             | NotifyFilters.DirectoryName
+                                             | NotifyFilters.FileName
+                                             | NotifyFilters.LastAccess
+                                             | NotifyFilters.LastWrite
+                                             | NotifyFilters.Security
+                                             | NotifyFilters.Size;
+
                         watcher.Created += Watcher_Created;
                         watcher.Deleted += Watcher_Deleted;
                         watcher.Renamed += Watcher_Renamed;
