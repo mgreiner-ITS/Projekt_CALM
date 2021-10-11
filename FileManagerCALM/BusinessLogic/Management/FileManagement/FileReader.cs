@@ -32,10 +32,10 @@ namespace BusinessLogic.Management.FileManagement
 
             if (fileItem.Type == FileType.pdf)
                 fileItem.Content = extractor.ExtractPdf(fullFilePath);
-            else if (fileItem.Type == FileType.docx || fileItem.Type == FileType.txt || fileItem.Type == FileType.xlsx)
-                fileItem.Content = extractor.Extract(fullFilePath);
-            else
+            else if (fileItem.Type == FileType.other)
                 return null;
+            else
+                fileItem.Content = extractor.Extract(fullFilePath);
 
             return fileItem;
         }
@@ -69,30 +69,15 @@ namespace BusinessLogic.Management.FileManagement
             string[] fileNameParts = filePathParts[filePathParts.Length - 1].Split('.');
             string typeString = fileNameParts[fileNameParts.Length - 1];
 
-            FileType fileType;
 
-            if (typeString == FileType.pdf.ToString())
+            if (Enum.TryParse(typeString, out FileType fileType))
             {
-                fileType = FileType.pdf;
-            }
-            else if (typeString == FileType.txt.ToString())
-            {
-                fileType = FileType.txt;
-            }
-            else if (typeString == FileType.docx.ToString())
-            {
-                fileType = FileType.docx;
-            }
-            else if (typeString == FileType.xlsx.ToString())
-            {
-                fileType = FileType.xlsx;
+                return fileType;
             }
             else
             {
-                fileType = FileType.other;
+                return FileType.other;
             }
-
-            return fileType;
         }
 
         private string ParseFileName(string fullFilePath)
