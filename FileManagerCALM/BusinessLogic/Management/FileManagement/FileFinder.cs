@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace BusinessLogic
+namespace BusinessLogic.Management.FileManagement
 {
     public class FileFinder
     {

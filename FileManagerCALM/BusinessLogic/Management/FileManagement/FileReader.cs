@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using Visualis.Extractor;
 
-namespace BusinessLogic.Management
+namespace BusinessLogic.Management.FileManagement
 {
     public  class FileReader
     {

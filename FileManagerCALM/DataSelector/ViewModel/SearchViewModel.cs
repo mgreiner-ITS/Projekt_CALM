@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using BusinessLogic.Management;
 using Microsoft.Xaml.Behaviors.Core;
+using BusinessLogic.Management.FileManagement;
 
 namespace DataSelector.ViewModel
 {
@@ -59,7 +60,7 @@ namespace DataSelector.ViewModel
 
         private void ShowFile()
         {
-            _fileOpener = new BusinessLogic.Management.FileOpener(SelectedItem);
+            _fileOpener = new FileOpener(SelectedItem);
 
         }
   

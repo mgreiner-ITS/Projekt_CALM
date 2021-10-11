@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Models;
 using System;
-namespace BusinessLogic.Management
+namespace BusinessLogic.Management.FileManagement
 {
     public class FileOpener
     {
