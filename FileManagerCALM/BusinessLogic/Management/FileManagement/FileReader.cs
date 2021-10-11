@@ -7,7 +7,7 @@ using Visualis.Extractor;
 
 namespace BusinessLogic.Management
 {
-    public  class FileItemReader
+    public  class FileReader
     {
         public static TextExtractorD extractor = new TextExtractorD();
         public static int n = 0;
@@ -20,10 +20,13 @@ namespace BusinessLogic.Management
                 Path = fullFilePath,
                 Name = ParseFileName(fullFilePath),
                 Type = ParseType(fullFilePath),
-                Content = extractor.Extract(fullFilePath),
                 Partition = ParsePartition(fullFilePath),
                 LastModified = lastModified
             };
+            if (fileItem.Type == FileType.pdf)
+                fileItem.Content = extractor.ExtractPdf(fullFilePath);
+            else
+                fileItem.Content = extractor.Extract(fullFilePath);
 
             return fileItem;
         }

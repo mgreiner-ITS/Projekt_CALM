@@ -11,19 +11,22 @@ namespace BusinessLogic.Management
 {
     public class MonitoringManagement
     {
-        private readonly DB _db;
+        private readonly DatabaseConnection _db;
+        private readonly FileReader _fileReader;
 
         private List<FileItem> monitoredFiles = new List<FileItem>();
         private List<string> monitoredDirectoryPaths = new List<string>();
 
         public MonitoringManagement()
         {
-            _db = new DB();
+            _db = new DatabaseConnection();
+            _fileReader = new FileReader();
         }
 
         //TODO: Currently a moved file is deleted from the database and thus no longer tracked
         public void InitialzeWatcher()
         {
+            monitoredFiles.Clear();
             try
             {
                 foreach (var fileItem in _db.GetAllFileItems())
@@ -33,10 +36,11 @@ namespace BusinessLogic.Management
                     if (!monitoredDirectoryPaths.Contains(fileInfo.Directory.FullName))
                     {
                         FileSystemWatcher watcher = new FileSystemWatcher(fileInfo.Directory.FullName);
-
+                        watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
                         watcher.Created += Watcher_Created;
                         watcher.Deleted += Watcher_Deleted;
                         watcher.Renamed += Watcher_Renamed;
+                        watcher.Changed += Watcher_Changed;
                         watcher.EnableRaisingEvents = true;
 
                         monitoredDirectoryPaths.Add(fileInfo.Directory.FullName);
@@ -64,6 +68,16 @@ namespace BusinessLogic.Management
             catch (PathTooLongException)
             {
                 Debug.Write("The specified path, file name, or both exceed the system-defined maximum length.");
+            }
+        }
+
+        private void Watcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            var fileItem = FindFileItem(e.FullPath);
+            if (fileItem != null)
+            {
+                var editedFileItem = _fileReader.ReadFile(e.FullPath, DateTime.Now);
+                _db.UpdateItems(editedFileItem, e.FullPath);
             }
         }
 

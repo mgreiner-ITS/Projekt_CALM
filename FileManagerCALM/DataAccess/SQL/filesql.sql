@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 -- Datenbank: `datastore`
 --
 
+CREATE SCHEMA `datastore` ;
+USE datastore;
 -- --------------------------------------------------------
 
 --

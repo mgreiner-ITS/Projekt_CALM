@@ -33,8 +33,6 @@ namespace DataSelector.ViewModel
 
         public ObservableCollection<PartitionViewModel> Partitions { get; set; } = new ObservableCollection<PartitionViewModel>();
 
-        public ObservableCollection<TreeViewItem> SelectionOverview { get; set; } = new ObservableCollection<TreeViewItem>();
-
         public ObservableCollection<ItemViewModel> SelectedItemViewModels { get; set; } = new ObservableCollection<ItemViewModel>();
 
         public List<FileItemViewModel> SelectedFiles { get; set; } = new List<FileItemViewModel>();
@@ -67,28 +65,22 @@ namespace DataSelector.ViewModel
             MonitorUsbInputs();
             GetAllPartions();
             SetWatcherForFiles();
-
-            SelectionOverview.Add(new TreeViewItem() { Header = "Test" }
-                                                       );
         }
-
-
 
         private void Sync()
         {
             GetAllFilesFromSelectedItems();
             List<ItemViewModel> itemViewModels = SelectedItemViewModels.ToList();
-            
+
             cancelledSync = false;
 
             double numberOfItems = SelectedFiles.Count();
             double numberOfProcessedItems = 0;
             ProgressBarProgress = 0;
 
-            //var sync = SynchronizationContext.Current;
-
             Task.Run(() =>
             {
+
                 foreach (FileItemViewModel currentFileViewModel in SelectedFiles)
                 {
                     if (cancelledSync)
@@ -102,7 +94,10 @@ namespace DataSelector.ViewModel
                     numberOfProcessedItems++;
                     ProgressBarProgress = (int)((numberOfProcessedItems / numberOfItems) * 100);
                 }
+
+                SetWatcherForFiles();
             });
+
         }
 
         private void CancelSync()
@@ -113,7 +108,7 @@ namespace DataSelector.ViewModel
         SearchView objSearchView = null;
         private void ShowSearchWindow()
         {/// Abfragen ob, das Fenst SearchUi schon angezeigt ist, wenn ja dann sollte keine neue UI anzeigen - Nguyen
-            if (objSearchView == null )
+            if (objSearchView == null)
             {
                 objSearchView = new SearchView();
                 objSearchView.Closed += (sender, args) => objSearchView = null;
@@ -280,7 +275,7 @@ namespace DataSelector.ViewModel
             }
             else
             {
-                foreach (var item in SelectedPartition.Items)
+                foreach (var item in SelectedPartition?.Items)
                 {
                     if (item is FileItemViewModel file && file.IsSelected)
                         SelectedFiles.Add(file);

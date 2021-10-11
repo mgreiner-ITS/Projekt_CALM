@@ -6,11 +6,11 @@ namespace BusinessLogic.Management
 {
     public class SearchManagement
     {
-        DB dbAcessSql;
+        DatabaseConnection dbAcessSql;
         List<FileItem> listItem;
         public SearchManagement()
         {
-            dbAcessSql = new DB();
+            dbAcessSql = new DatabaseConnection();
 
         }
 

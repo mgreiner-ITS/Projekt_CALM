@@ -7,11 +7,11 @@ namespace BusinessLogic.Management
 {
     public class UploadManagement
     {
-        private readonly DB database;
+        private readonly DatabaseConnection database;
 
         public UploadManagement()
         {
-            database = new DB();
+            database = new DatabaseConnection();
         }
 
         public void UploadFile( FileItem fileItemProxy )
@@ -19,7 +19,7 @@ namespace BusinessLogic.Management
             string currentFullPath = fileItemProxy.Path;
             DateTime currentLastModified = fileItemProxy.LastModified;
 
-            FileItemReader fileReader = new FileItemReader();
+            FileReader fileReader = new FileReader();
             var fileItem = fileReader.ReadFile(currentFullPath, fileItemProxy.LastModified);
 
             try

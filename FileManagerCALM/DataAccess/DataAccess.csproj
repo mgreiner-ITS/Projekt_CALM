@@ -55,9 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DB.cs" />
+    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Events\DataAcessEvents.cs" />
-    <Compile Include="IODB.cs" />
+    <Compile Include="IDatabaseConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

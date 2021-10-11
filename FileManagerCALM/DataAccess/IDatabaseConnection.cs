@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Models;
 namespace DataAccess
 {
-    public interface IODB
+    public interface IDatabaseConnection
     {
         bool Connection();
         void InsertData(FileItem newItem);

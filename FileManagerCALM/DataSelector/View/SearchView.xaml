@@ -87,7 +87,11 @@
         <GroupBox Grid.Row="1" BorderThickness="1"  BorderBrush="Blue">
             <!--<Grid>-->
 
-            <DataGrid ColumnHeaderStyle ="{StaticResource HeaderStyle}" ItemsSource="{Binding fileItems}" SelectedItem="{Binding SelectedItem}"  CanUserAddRows="False"  AutoGenerateColumns="False" Margin="0,10,0,-0.4" >
+            <DataGrid ColumnHeaderStyle ="{StaticResource HeaderStyle}" 
+                      ItemsSource="{Binding fileItems}" SelectedItem="{Binding SelectedItem}"  
+                      CanUserAddRows="False"  
+                      AutoGenerateColumns="False" Margin="0,10,0,-0.4" 
+                      Background="Transparent">
 
                 <DataGrid.InputBindings>
                     <MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding DoubleClickCommand}"  />

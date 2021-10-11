@@ -53,9 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileFinder.cs" />
-    <Compile Include="Management\FileItemReader.cs" />
-    <Compile Include="Management\FileOpener.cs" />
+    <Compile Include="Management\FileManagement\FileFinder.cs" />
+    <Compile Include="Management\FileManagement\FileReader.cs" />
+    <Compile Include="Management\FileManagement\FileOpener.cs" />
     <Compile Include="Management\SearchManagement.cs" />
     <Compile Include="Management\UploadManagement.cs" />
     <Compile Include="Management\MonitoringManagement.cs" />

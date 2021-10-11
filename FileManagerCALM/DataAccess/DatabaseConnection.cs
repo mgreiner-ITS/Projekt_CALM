@@ -8,7 +8,7 @@ using System.IO;
 
 namespace DataAccess
 {
-    public class DB : IODB
+    public class DatabaseConnection : IDatabaseConnection
     {
         public event InfosMessageEventHandler infoMessage;
         public event ErrorMessageEH ErrorMessage;
@@ -17,13 +17,13 @@ namespace DataAccess
         ConnectionState connectionState;
 
         string sql;
-        public DB()
+        public DatabaseConnection()
         {
             Connection();
 
         }
 
-        // Verbindung zur DB SQL
+        // Verbindung zur DatabaseConnection SQL
         public bool Connection()
         {
             dbmysql = new DBAdapter(DatabaseType.MySql,
@@ -34,11 +34,11 @@ namespace DataAccess
             {
                 connection = true;
             }
-            else infoMessage?.Invoke($"Keine Verbindung zur DB");
+            else infoMessage?.Invoke($"Keine Verbindung zur DatabaseConnection");
             return connection;
         }
 
-        // Alle Dateien von DB holen für Monitoring, um zu wissen, ob die Dateien gelöscht oder geändert werden.
+        // Alle Dateien von DatabaseConnection holen für Monitoring, um zu wissen, ob die Dateien gelöscht oder geändert werden.
         public List<FileItem> GetAllFileItems()
         {
             List<FileItem> listItems = new List<FileItem>();
@@ -75,7 +75,7 @@ namespace DataAccess
             throw new FileNotFoundException("No file was found.");
         }
 
-        /// Dateien im DB Speichern
+        /// Dateien im DatabaseConnection Speichern
         public void InsertData(FileItem newItem)
         {
             // INSERT INTO `filesql` (`ID`, `Path`, `Content`, `Partitions`, `LastModified`, `DataType`, `DataName`)
@@ -99,7 +99,7 @@ namespace DataAccess
             }
         }
 
-        //Ersetzt Einzelne \ mit \\, damit sie in DB SQL den \ annehmen
+        //Ersetzt Einzelne \ mit \\, damit sie in DatabaseConnection SQL den \ annehmen
         private string ParsePath(string path)
         {
             return path.Replace("\\", "\\\\");
@@ -114,7 +114,7 @@ namespace DataAccess
         }
 
 
-        /// Dateien im DB holen -> Fulltext Search
+        /// Dateien im DatabaseConnection holen -> Fulltext Search
         public List<FileItem> GetFileItemsByText(string searchText)
         {
             List<FileItem> listItems = new List<FileItem>();
@@ -142,7 +142,7 @@ namespace DataAccess
         }
 
 
-        /// Dateien im DB löschen     
+        /// Dateien im DatabaseConnection löschen     
         public void DelItems(FileItem fileItem)
         {
             //DELETE FROM `filesql` WHERE `filesql`.`ID` = 6
