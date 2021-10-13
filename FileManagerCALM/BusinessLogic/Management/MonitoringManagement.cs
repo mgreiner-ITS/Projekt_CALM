@@ -92,11 +92,13 @@ namespace BusinessLogic.Management
         private void Watcher_Renamed(object sender, RenamedEventArgs e)
         {
             var fileItem = FindFileItem(e.OldFullPath);
-            fileItem.Path = e.FullPath;
-            fileItem.Name = e.Name;
 
             if (fileItem != null)
+            {
+                fileItem.Path = e.FullPath;
+                fileItem.Name = e.Name;
                 _db.UpdateItems(fileItem, e.OldFullPath);
+            }
         }
 
         private void Watcher_Deleted(object sender, FileSystemEventArgs e)
