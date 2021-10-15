@@ -51,15 +51,15 @@
         <Grid DockPanel.Dock="Top">
             <!--<StackPanel  Grid.Row="0" Orientation="Horizontal" >-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="700"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="40"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox  Grid.Column="0"
+            <TextBox Grid.Column="0"
                      Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Name="txtBox_search"  
                       Tag=" Search Full- Text "
                      Foreground ="#031e37"  FontSize="17"   FontStyle="Italic"
-                     Style="{StaticResource MyWaterMarkStyle}" Margin="35,9,0,5" >
+                     Style="{StaticResource MyWaterMarkStyle}">
                 <TextBox.InputBindings>
                  <KeyBinding Command="{Binding EnterCmd}" Key="Enter" />
                 </TextBox.InputBindings>
@@ -70,7 +70,7 @@
                     </TextBox.Resources>
                 </TextBox>
 
-                <Button Grid.Column="1" Background="#c0d6e4" Name="btn_search"  Command="{Binding SearchDataCommand}" Margin="35,9,9.6,5"   >
+                <Button Grid.Column="1" Background="#c0d6e4" Name="btn_search"  Command="{Binding SearchDataCommand}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="3"/>

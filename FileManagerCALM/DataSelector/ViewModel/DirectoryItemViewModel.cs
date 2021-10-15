@@ -58,6 +58,11 @@ namespace DataSelector.ViewModel
             }
         }
 
+        /// <summary>
+        ///  To get all files in the directory and in its subfolders
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns><c>List<FileItemViewModel></c></returns>
         public List<FileItemViewModel> GetAllFiles(string path)
         {
             List<FileItemViewModel> files = new List<FileItemViewModel>();
@@ -65,7 +70,6 @@ namespace DataSelector.ViewModel
             {
                 foreach (var filePath in Directory.GetFiles(path))
                 {
-                    //files.Add(new FileItemViewModel(new FileInfo(filePath)));
                     InitializeSubItems();
                     var fileToAdd = (FileItemViewModel)SubItemViewModels.Where(item => item.Path.Equals(filePath)).FirstOrDefault();
                     if(fileToAdd != null)
